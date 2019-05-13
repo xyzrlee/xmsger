@@ -5,7 +5,6 @@ services:
             context: .
             args:
                 - MVNWARGS="-Dmaven.test.skip=true"
-                - BRANCH=dev
         image: xyzrlee/xmsger
         ports:
             - 9998:8080/tcp
