@@ -7,8 +7,8 @@ LABEL maintainer="Ricky Li <cnrickylee@gmail.com>"
 
 USER root
 
-ARG MVNWARGS
-ARG JVMARGS
+ARG MVNWARGS=
+ARG JVMARGS=
 ARG BRANCH=master
 
 RUN set -ex \
