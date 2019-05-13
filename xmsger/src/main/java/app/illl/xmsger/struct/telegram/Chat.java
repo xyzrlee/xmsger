@@ -1,5 +1,6 @@
 package app.illl.xmsger.struct.telegram;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import java.io.Serializable;
 @ToString
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Chat implements Serializable {
     private static final long serialVersionUID = 319460851096239790L;
     @JsonProperty("id")

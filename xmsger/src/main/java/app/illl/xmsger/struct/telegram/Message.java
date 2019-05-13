@@ -1,6 +1,7 @@
 package app.illl.xmsger.struct.telegram;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import lombok.Getter;
@@ -16,6 +17,7 @@ import java.time.ZonedDateTime;
 @ToString
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Message implements Serializable {
     private static final long serialVersionUID = -3139194352255073448L;
     @JsonProperty("message_id")

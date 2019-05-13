@@ -5,6 +5,7 @@
     <logger name="org.apache.tomcat" level="info"/>
     <logger name="app.illl.xmsger" level="trace"/>
     <logger name="org.apache.http.headers" level="debug"/>
+    <logger name="org.apache.http.wire" level="debug"/>
     <logger name="org.apache.http.impl.conn.DefaultHttpClientConnectionOperator" level="debug"/>
     <root level="info"/>
 </configuration>
