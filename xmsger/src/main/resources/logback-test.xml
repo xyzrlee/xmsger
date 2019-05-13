@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <logger name="org.apache.tomcat" level="info"/>
+    <logger name="app.illl.xmsger" level="debug"/>
+    <logger name="org.apache.http.headers" level="debug"/>
+    <logger name="org.apache.http.impl.conn.DefaultHttpClientConnectionOperator" level="debug"/>
+    <root level="info"/>
+</configuration>
