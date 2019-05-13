@@ -21,7 +21,7 @@ RUN set -ex \
  # Build & install
  && git clone https://github.com/xyzrlee/xmsger.git /tmp/repo/xmsger \
  && cd /tmp/repo/xmsger/xmsger \
- && git checkout ${BRANCH}} \
+ && git checkout ${BRANCH} \
  && chmod +x mvnw \
  && ./mvnw clean package ${MVNWARGS}\
  && mkdir -p /xmsger \
