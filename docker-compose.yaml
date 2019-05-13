@@ -1,0 +1,12 @@
+version: '3'
+services:
+    xmsger:
+        build:
+            context: .
+            args:
+                - MVNWARGS="-Dmaven.test.skip=true"
+        image: xyzrlee/xmsger
+        ports:
+            - 9998:8080/tcp
+        environment:
+            - JVMARGS=-Xmx512m
