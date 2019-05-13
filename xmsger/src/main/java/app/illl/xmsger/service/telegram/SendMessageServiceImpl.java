@@ -31,6 +31,7 @@ public class SendMessageServiceImpl implements SendMessageService {
         URI uri = URI.create(getUrlService.getUrl(Telegram.METHOD_SEND_MESSAGE));
         HttpClientContext httpClientContext = HttpClientContext.create();
         try (CloseableHttpClient httpClient = HttpClientBuilder.create()
+                .useSystemProperties()
                 .setDefaultRequestConfig(HttpClientRequestConfig.DEFAULT)
                 .build()
         ) {
