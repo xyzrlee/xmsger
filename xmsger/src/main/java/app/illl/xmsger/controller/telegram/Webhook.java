@@ -17,15 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class Webhook {
 
     @Autowired
-    SendMessageService sendMessageService;
+    private SendMessageService sendMessageService;
 
     @PostMapping
     public void hook(@RequestBody Update update) {
-        log.info("update:{}", update);
-        SendMessage<String> sendMessage = new SendMessage<>();
-        sendMessage.setChatId(update.getMessage().getChat().getId());
-        sendMessage.setText(update.getMessage().getText());
-        sendMessageService.sendMessage(sendMessage);
+        if (update.getMessage() != null) {
+            SendMessage<String> sendMessage = new SendMessage<>();
+            sendMessage.setChatId(update.getMessage().getChat().getId());
+            sendMessage.setText(update.getMessage().getText());
+            sendMessageService.sendMessage(sendMessage);
+        }
     }
 
 }
