@@ -14,7 +14,7 @@ addons:
 script:
 - cd xmsger
 - chmod +x mvnw
-- ./mvnw clean package -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+- ./mvnw clean package -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -B -V
 - ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
 
 cache:
