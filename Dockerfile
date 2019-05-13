@@ -9,6 +9,7 @@ USER root
 
 ARG MVNWARGS
 ARG JVMARGS
+ARG BRANCH=master
 
 RUN set -ex \
  # Build environment setup
@@ -18,10 +19,9 @@ RUN set -ex \
       maven \
       git \
  # Build & install
-# && git clone https://github.com/xyzrlee/xmsger.git /tmp/repo/xmsger \
- && mkdir -p /tmp/repo/xmsger
- && cp -r xmsger /tmp/repo/xmsger/xmsger
+ && git clone https://github.com/xyzrlee/xmsger.git /tmp/repo/xmsger \
  && cd /tmp/repo/xmsger/xmsger \
+ && git checkout ${BRANCH}} \
  && chmod +x mvnw \
  && ./mvnw clean package ${MVNWARGS}\
  && mkdir -p /xmsger \
