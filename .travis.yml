@@ -5,17 +5,15 @@ language: java
 jdk:
 - openjdk8
 
-addons:
-  sonarcloud:
-    organization: "$SONAR_ORGANIZATION"
-    token:
-      secure: "$SONAR_TOKEN"
-
 script:
 - cd xmsger
 - chmod +x mvnw
-- ./mvnw clean package -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -B -V
-- ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
+- ./mvnw clean install -Dmaven.javadoc.skip=true -B -V
+- ./mvnw sonar:sonar \
+  -Dsonar.projectKey=xyzrlee_xmsger \
+  -Dsonar.organization=xyzrlee-github \
+  -Dsonar.host.url=https://sonarcloud.io \
+  -Dsonar.login=$SONAR_TOKEN
 
 cache:
   directories:
