@@ -31,9 +31,9 @@ public class RegisterIdService {
         if (null == telegramChat) {
             telegramChat = new TelegramChat();
             telegramChat.setChatId(chatId);
-            telegramChat.setUsername(username);
-            telegramChat.setType(type);
         }
+        telegramChat.setUsername(username);
+        telegramChat.setType(type);
         telegramChat.setMessageId(messageId);
         telegramChatRepository.save(telegramChat);
     }
