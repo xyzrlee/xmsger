@@ -7,11 +7,9 @@ jdk:
 
 addons:
   sonarcloud:
-    projectKey: "xyzrlee_xmsger"
     organization: "xyzrlee-github"
     token:
       secure: "$SONAR_TOKEN"
-
 
 script:
 - cd xmsger
