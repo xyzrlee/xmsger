@@ -1,6 +1,7 @@
 package app.illl.xmsger.controller.telegram;
 
 import app.illl.xmsger.constant.Telegram;
+import app.illl.xmsger.service.telegram.RegisterIdService;
 import app.illl.xmsger.service.telegram.SendMessageService;
 import app.illl.xmsger.struct.telegram.Update;
 import lombok.extern.slf4j.Slf4j;
@@ -17,11 +18,14 @@ public class Webhook {
 
     @Autowired
     private SendMessageService sendMessageService;
+    @Autowired
+    private RegisterIdService registerIdService;
 
     @PostMapping
     public void hook(@RequestBody Update update) {
         if (update == null) return;
         if (update.getMessage() != null) {
+            registerIdService.registerId(update.getMessage());
             sendMessageService.replyPlainText(
                     update.getMessage().getChat().getId(),
                     update.getMessage().getText(),
