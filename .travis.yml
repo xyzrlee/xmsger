@@ -12,6 +12,7 @@ addons:
     token:
       secure: "$SONAR_TOKEN"
 
+
 script:
 - cd xmsger
 - chmod +x mvnw
