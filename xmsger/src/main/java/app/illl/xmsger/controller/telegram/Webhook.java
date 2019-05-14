@@ -2,7 +2,6 @@ package app.illl.xmsger.controller.telegram;
 
 import app.illl.xmsger.constant.Telegram;
 import app.illl.xmsger.service.telegram.SendMessageService;
-import app.illl.xmsger.struct.telegram.SendMessage;
 import app.illl.xmsger.struct.telegram.Update;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +20,13 @@ public class Webhook {
 
     @PostMapping
     public void hook(@RequestBody Update update) {
+        if (update == null) return;
         if (update.getMessage() != null) {
-            SendMessage<String> sendMessage = new SendMessage<>();
-            sendMessage.setChatId(update.getMessage().getChat().getId());
-            sendMessage.setText(update.getMessage().getText());
-            sendMessageService.sendMessage(sendMessage);
+            sendMessageService.replyPlainText(
+                    update.getMessage().getChat().getId(),
+                    update.getMessage().getText(),
+                    update.getMessage().getMessageId()
+            );
         }
     }
 

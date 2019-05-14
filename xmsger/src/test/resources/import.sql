@@ -1,0 +1,1 @@
+insert into token (site, token) values ('telegram', 'telegram_test');

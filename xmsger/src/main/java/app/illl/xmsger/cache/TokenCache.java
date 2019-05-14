@@ -25,9 +25,9 @@ public class TokenCache implements InitializingBean {
         return dataMap.get(site);
     }
 
-    @Scheduled(cron = "0 * * * * *")
+    @Scheduled(cron = "0 */10 * * * *")
     @Synchronized
-    public void refresh() {
+    private void refresh() {
         Map<String, Token> tempMap = new HashMap<>();
         List<Token> tokens = tokenService.findAll();
         for (Token token : tokens) {
