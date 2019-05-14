@@ -34,7 +34,7 @@ public class TokenCache implements InitializingBean {
         }
         this.dataMap = tempMap;
         if (log.isDebugEnabled()) {
-            log.debug("dataMap:{}", dataMap.size());
+            log.debug("tokenCache:{}", dataMap.size());
         }
     }
 

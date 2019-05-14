@@ -4,7 +4,10 @@ import app.illl.xmsger.datasource.entity.TelegramChat;
 import app.illl.xmsger.datasource.repository.TelegramChatRepository;
 import app.illl.xmsger.struct.telegram.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+
+import javax.transaction.Transactional;
 
 @Component
 public class RegisterIdService {
@@ -12,6 +15,8 @@ public class RegisterIdService {
     @Autowired
     private TelegramChatRepository telegramChatRepository;
 
+    @Async
+    @Transactional
     public void registerId(Message message) {
         if (message == null) return;
         if (message.getChat() == null) return;
@@ -20,6 +25,9 @@ public class RegisterIdService {
         String type = message.getChat().getType();
         Integer messageId = message.getMessageId();
         TelegramChat telegramChat = telegramChatRepository.findById(chatId).orElse(null);
+        if (null != telegramChat && telegramChat.getChatId() >= chatId) {
+            return;
+        }
         if (null == telegramChat) {
             telegramChat = new TelegramChat();
             telegramChat.setChatId(chatId);
