@@ -7,7 +7,7 @@ jdk:
 
 addons:
   sonarcloud:
-    projectKey: "xyzrlee_api"
+    projectKey: "xyzrlee_xmsger"
     organization: "xyzrlee-github"
     token:
       secure: "$SONAR_TOKEN"
@@ -16,7 +16,7 @@ script:
 - cd xmsger
 - chmod +x mvnw
 - ./mvnw clean install -Dmaven.javadoc.skip=true -B -V
-- ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
+- ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent org.jacoco:jacoco-maven-plugin:report package sonar:sonar
 
 cache:
   directories:
