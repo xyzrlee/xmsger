@@ -1,7 +1,7 @@
 package app.illl.xmsger.cache;
 
 import app.illl.xmsger.datasource.entity.Token;
-import app.illl.xmsger.datasource.service.TokenService;
+import app.illl.xmsger.datasource.repository.TokenRepository;
 import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
@@ -10,7 +10,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Component
@@ -18,7 +17,7 @@ import java.util.Map;
 public class TokenCache implements InitializingBean {
 
     @Autowired
-    private TokenService tokenService;
+    private TokenRepository tokenRepository;
     private Map<String, Token> dataMap;
 
     public Token getToken(String site) {
@@ -29,16 +28,17 @@ public class TokenCache implements InitializingBean {
     @Synchronized
     private void refresh() {
         Map<String, Token> tempMap = new HashMap<>();
-        List<Token> tokens = tokenService.findAll();
+        Iterable<Token> tokens = tokenRepository.findAll();
         for (Token token : tokens) {
             tempMap.put(token.getSite(), token);
         }
         this.dataMap = tempMap;
         if (log.isDebugEnabled()) {
-            log.debug("dataMap:{}", dataMap.keySet());
+            log.debug("dataMap:{}", dataMap.size());
         }
     }
 
+    @SuppressWarnings("RedundantThrows")
     @Override
     public void afterPropertiesSet() throws Exception {
         this.refresh();
