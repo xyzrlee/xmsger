@@ -7,7 +7,7 @@ jdk:
 
 addons:
   sonarcloud:
-    organization: "xyzrlee-github"
+    organization: "xyzrlee"
     token:
       secure: "$SONAR_TOKEN"
 
