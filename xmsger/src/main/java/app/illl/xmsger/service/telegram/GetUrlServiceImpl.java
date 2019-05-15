@@ -19,6 +19,20 @@
 
 package app.illl.xmsger.service.telegram;
 
-public interface GetUrlService {
-    String getUrl(String method);
+import app.illl.xmsger.cache.TokenCache;
+import app.illl.xmsger.constant.Telegram;
+import app.illl.xmsger.constant.TokenSites;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+@Component
+@RequiredArgsConstructor
+public class GetUrlServiceImpl implements GetUrlService {
+
+    private final TokenCache tokenCache;
+
+    public String getUrl(String method) {
+        return Telegram.BASE_URL + tokenCache.getToken(TokenSites.TELEGRAM).getToken() + "/" + method;
+    }
+
 }

@@ -23,6 +23,7 @@ import app.illl.xmsger.constant.Twitter;
 import app.illl.xmsger.service.twitter.IftttTweetProcessor;
 import app.illl.xmsger.service.twitter.TweetProcessor;
 import app.illl.xmsger.struct.twitter.IftttTweet;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.context.ApplicationContext;
@@ -40,6 +41,7 @@ import java.util.Map;
 @RestController
 @RequestMapping(Twitter.PATH_TWEET)
 @Slf4j
+@RequiredArgsConstructor
 public class Tweet implements ApplicationListener<ContextRefreshedEvent> {
 
     private Map<String, IftttTweetProcessor> serviceMap;
