@@ -25,7 +25,7 @@ public class Webhook {
     public void hook(@RequestBody Update update) {
         if (update == null) return;
         if (update.getMessage() != null) {
-            registerIdService.registerId(update.getMessage());
+            registerIdService.registerIdAsync(update.getMessage());
             sendMessageService.replyPlainText(
                     update.getMessage().getChat().getId(),
                     update.getMessage().getText(),

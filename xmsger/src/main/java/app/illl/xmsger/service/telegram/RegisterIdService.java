@@ -15,9 +15,8 @@ public class RegisterIdService {
     @Autowired
     private TelegramChatRepository telegramChatRepository;
 
-    @Async
     @Transactional
-    public void registerId(Message message) {
+    private void registerId(Message message) {
         if (message == null) return;
         if (message.getChat() == null) return;
         Integer chatId = message.getChat().getId();
@@ -36,6 +35,11 @@ public class RegisterIdService {
         telegramChat.setType(type);
         telegramChat.setMessageId(messageId);
         telegramChatRepository.save(telegramChat);
+    }
+
+    @Async
+    public void registerIdAsync(Message message) {
+        this.registerId(message);
     }
 
 }

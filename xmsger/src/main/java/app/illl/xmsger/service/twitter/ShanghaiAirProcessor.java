@@ -36,7 +36,7 @@ public class ShanghaiAirProcessor implements IftttTweetProcessor {
         airDescription.setFineParticulateMatter(cgShanghaiAir.getFineParticulateMatter());
         airDescription.setAqi(cgShanghaiAir.getAqi());
         airDescription.setComment(cgShanghaiAir.getComment());
-        saveAirDataService.saveAirData("Shanghai", cgShanghaiAir.getTime(), airDescription);
+        saveAirDataService.saveAirDataAsync("Shanghai", cgShanghaiAir.getTime(), airDescription);
     }
 
     @Async

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
 @SuppressWarnings("WeakerAccess")
@@ -16,13 +17,18 @@ public class SaveAirDataService {
     @Autowired
     private AirDataRepository airDataRepository;
 
-    @Async
-    public void saveAirData(String city, LocalDateTime time, AirDescription airDescription) {
+    @Transactional
+    private void saveAirData(String city, LocalDateTime time, AirDescription airDescription) {
         AirData airData = new AirData();
         airData.setMessageTime(time);
         airData.setCity(city);
         airData.setDescription(airDescription);
         airDataRepository.save(airData);
+    }
+
+    @Async
+    public void saveAirDataAsync(String city, LocalDateTime time, AirDescription airDescription) {
+        this.saveAirData(city, time, airDescription);
     }
 
 }
