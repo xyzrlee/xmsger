@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 @Slf4j
@@ -20,19 +20,19 @@ public class TelegramRegisteredChatCache implements InitializingBean {
     @Autowired
     private TelegramRegisteredChatRepository telegramRegisteredChatRepository;
     @Getter
-    private List<Integer> chatIdList;
+    private Set<Integer> chatIds;
 
     @Scheduled(cron = "0 */10 * * * *")
     @Synchronized
     private void refresh() {
-        List<Integer> dataList = new ArrayList<>();
+        Set<Integer> data = new HashSet<>();
         Iterable<TelegramRegisteredChat> chats = this.telegramRegisteredChatRepository.findAll();
         for (TelegramRegisteredChat chat : chats) {
-            dataList.add(chat.getChatId());
+            data.add(chat.getChatId());
         }
-        this.chatIdList = dataList;
+        this.chatIds = data;
         if (log.isDebugEnabled()) {
-            log.debug("telegramRegisteredChatCache:{}", dataList.size());
+            log.debug("telegramRegisteredChatCache:{}", data.size());
         }
     }
 

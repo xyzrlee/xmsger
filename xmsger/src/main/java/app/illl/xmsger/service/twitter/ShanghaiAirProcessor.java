@@ -49,7 +49,7 @@ public class ShanghaiAirProcessor implements IftttTweetProcessor {
                 cgShanghaiAir.getFineParticulateMatter(), cgShanghaiAir.getAqi(), cgShanghaiAir.getComment()
         );
         log.debug("warnMessage:{}", message);
-        for (Integer chatId : telegramRegisteredChatCache.getChatIdList()) {
+        for (Integer chatId : telegramRegisteredChatCache.getChatIds()) {
             sendMessageService.sendPlainText(chatId, message, disableNotification);
         }
     }
