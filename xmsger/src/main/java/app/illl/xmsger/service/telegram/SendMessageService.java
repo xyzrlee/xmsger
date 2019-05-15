@@ -48,9 +48,14 @@ public class SendMessageService {
     }
 
     public void sendPlainText(Integer chatId, String text) {
+        this.sendPlainText(chatId, text, false);
+    }
+
+    public void sendPlainText(Integer chatId, String text, Boolean disableNotification) {
         SendMessage<String> sendMessage = new SendMessage<>();
         sendMessage.setChatId(chatId);
         sendMessage.setText(text);
+        sendMessage.setDisableNotification(disableNotification);
         this.sendMessage(sendMessage);
     }
 
