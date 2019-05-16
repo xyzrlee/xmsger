@@ -57,6 +57,7 @@ public class RegisterIdServiceImpl implements RegisterIdService {
     }
 
     @Async
+    @Transactional
     public void registerIdAsync(Message message) {
         this.registerId(message);
     }
