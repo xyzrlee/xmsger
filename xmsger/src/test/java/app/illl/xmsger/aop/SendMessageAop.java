@@ -31,10 +31,15 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class SendMessageAop {
 
-    @Around("execution(* app.illl.xmsger.service.telegram.SendMessageService.*(..))")
-    public void doAround(final ProceedingJoinPoint proceedingJoinPoint) {
+    @Around(
+            "execution(* app.illl.xmsger.service.telegram.SendMessageService.*(..))"
+                    + " && args(chatId,text,..)"
+    )
+    public void doAround(final ProceedingJoinPoint proceedingJoinPoint
+            , Integer chatId, String text
+    ) {
         Signature signature = proceedingJoinPoint.getSignature();
-        log.info("{} skipped using Aspect", signature.getName());
+        log.info("{} skipped using Aspect, text: {}", signature.getName(), text);
     }
 
 }

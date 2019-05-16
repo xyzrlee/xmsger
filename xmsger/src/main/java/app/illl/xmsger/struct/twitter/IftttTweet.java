@@ -62,4 +62,11 @@ public class IftttTweet {
         this.created = LocalDateTime.parse(createdString, FORMATTER);
     }
 
+    public String toNoticeMessage() {
+        return String.format(
+                "%s tweeted at %s\n%s\nlink:%s",
+                this.username, this.created, this.text, this.link
+        );
+    }
+
 }
