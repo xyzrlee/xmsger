@@ -22,10 +22,10 @@ package app.illl.xmsger.cache;
 import app.illl.xmsger.datasource.entity.TelegramRegisteredChat;
 import app.illl.xmsger.datasource.repository.TelegramRegisteredChatRepository;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -34,10 +34,10 @@ import java.util.Set;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class TelegramRegisteredChatCache implements InitializingBean {
 
-    @Autowired
-    private TelegramRegisteredChatRepository telegramRegisteredChatRepository;
+    private final TelegramRegisteredChatRepository telegramRegisteredChatRepository;
     @Getter
     private Set<Integer> chatIds;
 
@@ -50,9 +50,7 @@ public class TelegramRegisteredChatCache implements InitializingBean {
             data.add(chat.getChatId());
         }
         this.chatIds = data;
-        if (log.isDebugEnabled()) {
-            log.debug("telegramRegisteredChatCache:{}", data.size());
-        }
+        log.debug("telegramRegisteredChatCache:{}", data.size());
     }
 
     @SuppressWarnings("RedundantThrows")

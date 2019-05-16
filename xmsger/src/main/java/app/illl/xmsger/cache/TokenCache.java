@@ -21,10 +21,10 @@ package app.illl.xmsger.cache;
 
 import app.illl.xmsger.datasource.entity.Token;
 import app.illl.xmsger.datasource.repository.TokenRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -33,10 +33,10 @@ import java.util.Map;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class TokenCache implements InitializingBean {
 
-    @Autowired
-    private TokenRepository tokenRepository;
+    private final TokenRepository tokenRepository;
     private Map<String, Token> dataMap;
 
     public Token getToken(String site) {

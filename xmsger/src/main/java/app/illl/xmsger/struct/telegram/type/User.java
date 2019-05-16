@@ -17,7 +17,7 @@
  *
  */
 
-package app.illl.xmsger.struct.telegram;
+package app.illl.xmsger.struct.telegram.type;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -27,6 +27,7 @@ import lombok.ToString;
 
 import java.io.Serializable;
 
+@SuppressWarnings("WeakerAccess")
 @ToString
 @Getter
 @Setter

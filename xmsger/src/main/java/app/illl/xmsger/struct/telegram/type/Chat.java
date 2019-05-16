@@ -17,7 +17,7 @@
  *
  */
 
-package app.illl.xmsger.struct.telegram;
+package app.illl.xmsger.struct.telegram.type;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -27,32 +27,21 @@ import lombok.ToString;
 
 import java.io.Serializable;
 
+@SuppressWarnings("WeakerAccess")
 @ToString
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Update implements Serializable {
-    private static final long serialVersionUID = 3590869455751822946L;
-    @JsonProperty("update_id")
-    private int updateId;
-    @JsonProperty("message")
-    private Message message;
-    @JsonProperty("edited_message")
-    private Message editedMessage;
-    @JsonProperty("channel_post")
-    private Message channelPost;
-    @JsonProperty("edited_channel_post")
-    private Message editedChannelPost;
-    @JsonProperty("inline_query")
-    private InlineQuery inlineQuery;
-    @JsonProperty("chosen_inline_result")
-    private ChosenInlineResult chosenInlineResult;
-    @JsonProperty("callback_query")
-    private CallbackQuery callbackQuery;
-    @JsonProperty("shipping_query")
-    private ShippingQuery shippingQuery;
-    @JsonProperty("pre_checkout_query")
-    private PreCheckoutQuery preCheckoutQuery;
-    @JsonProperty("poll")
-    private Poll poll;
+public class Chat implements Serializable {
+    private static final long serialVersionUID = 319460851096239790L;
+    @JsonProperty("id")
+    private Integer id;
+    @JsonProperty("type")
+    private String type;
+    @JsonProperty("username")
+    private String username;
+    @JsonProperty("first_name")
+    private String firstName;
+    @JsonProperty("last_name")
+    private String lastName;
 }

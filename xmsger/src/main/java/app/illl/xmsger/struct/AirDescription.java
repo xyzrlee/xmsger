@@ -34,7 +34,7 @@ import java.math.BigDecimal;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AirDescription implements Serializable {
     private static final long serialVersionUID = 5730585897874242640L;
-    @JsonProperty("PM 2.5")
+    @JsonProperty("PM2.5")
     private BigDecimal fineParticulateMatter;
     @JsonProperty("AQI")
     private Integer aqi;

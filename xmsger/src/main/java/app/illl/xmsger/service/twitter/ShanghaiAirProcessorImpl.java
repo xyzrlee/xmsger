@@ -67,6 +67,7 @@ public class ShanghaiAirProcessorImpl implements ShanghaiAirProcessor {
                 cgShanghaiAir.getFineParticulateMatter(), cgShanghaiAir.getAqi(), cgShanghaiAir.getComment()
         );
         log.debug("warnMessage:{}", message);
+        log.debug("sending to {} ids", telegramRegisteredChatCache.getChatIds().size());
         for (Integer chatId : telegramRegisteredChatCache.getChatIds()) {
             sendMessageService.sendPlainText(chatId, message, disableNotification);
         }

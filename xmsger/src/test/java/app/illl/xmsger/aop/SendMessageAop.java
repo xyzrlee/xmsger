@@ -17,19 +17,24 @@
  *
  */
 
-package app.illl.xmsger.struct.telegram;
+package app.illl.xmsger.aop;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.Signature;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
 
-import java.io.Serializable;
+@Aspect
+@Component
+@Slf4j
+public class SendMessageAop {
 
-@ToString
-@Getter
-@Setter
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class CallbackQuery implements Serializable {
-    private static final long serialVersionUID = 100432296827165138L;
+    @Around("execution(* app.illl.xmsger.service.telegram.SendMessageService.*(..))")
+    public void doAround(final ProceedingJoinPoint proceedingJoinPoint) {
+        Signature signature = proceedingJoinPoint.getSignature();
+        log.info("{} skipped using Aspect", signature.getName());
+    }
+
 }

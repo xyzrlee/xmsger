@@ -17,11 +17,20 @@
  *
  */
 
-package app.illl.xmsger.service.telegram;
+package app.illl.xmsger.struct.telegram.type;
 
-import app.illl.xmsger.struct.telegram.type.Message;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-public interface RegisterIdService {
-    void registerId(Message message);
-    void registerIdAsync(Message message);
+import java.io.Serializable;
+
+@SuppressWarnings("WeakerAccess")
+@ToString
+@Getter
+@Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ChosenInlineResult implements Serializable {
+    private static final long serialVersionUID = -56545128106413260L;
 }

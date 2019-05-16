@@ -23,14 +23,24 @@ import app.illl.xmsger.exception.InternalServerErrorException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.IOException;
+
 public class JsonUtils {
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper DEFAULT_OBJECT_MAPPER = new ObjectMapper();
 
     public static String toJson(Object object) {
         try {
-            return objectMapper.writeValueAsString(object);
+            return DEFAULT_OBJECT_MAPPER.writeValueAsString(object);
         } catch (JsonProcessingException e) {
+            throw new InternalServerErrorException(e);
+        }
+    }
+
+    public static <T> T fromJson(String string, Class<T> tClass) {
+        try {
+            return DEFAULT_OBJECT_MAPPER.readValue(string, tClass);
+        } catch (IOException e) {
             throw new InternalServerErrorException(e);
         }
     }

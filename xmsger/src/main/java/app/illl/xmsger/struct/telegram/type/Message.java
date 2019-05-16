@@ -17,7 +17,7 @@
  *
  */
 
-package app.illl.xmsger.struct.telegram;
+package app.illl.xmsger.struct.telegram.type;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;

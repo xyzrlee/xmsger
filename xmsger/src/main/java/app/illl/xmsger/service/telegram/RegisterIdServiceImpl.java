@@ -21,7 +21,7 @@ package app.illl.xmsger.service.telegram;
 
 import app.illl.xmsger.datasource.entity.TelegramChat;
 import app.illl.xmsger.datasource.repository.TelegramChatRepository;
-import app.illl.xmsger.struct.telegram.Message;
+import app.illl.xmsger.struct.telegram.type.Message;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;

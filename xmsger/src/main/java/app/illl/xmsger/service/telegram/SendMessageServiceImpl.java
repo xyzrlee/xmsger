@@ -22,7 +22,7 @@ package app.illl.xmsger.service.telegram;
 import app.illl.xmsger.constant.Telegram;
 import app.illl.xmsger.exception.BadRequestException;
 import app.illl.xmsger.exception.InternalServerErrorException;
-import app.illl.xmsger.struct.telegram.SendMessage;
+import app.illl.xmsger.struct.telegram.request.SendMessageRequest;
 import app.illl.xmsger.utility.HttpClientUtils;
 import app.illl.xmsger.utility.JsonUtils;
 import lombok.RequiredArgsConstructor;
@@ -47,13 +47,13 @@ public class SendMessageServiceImpl implements SendMessageService {
 
     private final GetUrlService getUrlService;
 
-    private void sendMessage(SendMessage sendMessage) {
+    private void sendMessage(SendMessageRequest sendMessageRequest) {
         URI uri = URI.create(getUrlService.getUrl(Telegram.METHOD_SEND_MESSAGE));
         try (CloseableHttpClient httpClient = HttpClientUtils.getDefaultHttpClient()) {
             HttpPost request = new HttpPost();
             request.setURI(uri);
             request.setHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.getMimeType());
-            request.setEntity(new StringEntity(JsonUtils.toJson(sendMessage)));
+            request.setEntity(new StringEntity(JsonUtils.toJson(sendMessageRequest)));
             try (CloseableHttpResponse httpResponse = httpClient.execute(request)) {
                 HttpStatus httpStatus = HttpStatus.valueOf(httpResponse.getStatusLine().getStatusCode());
                 if (!httpStatus.is2xxSuccessful()) {
@@ -71,19 +71,19 @@ public class SendMessageServiceImpl implements SendMessageService {
     }
 
     public void sendPlainText(Integer chatId, String text, Boolean disableNotification) {
-        SendMessage<String> sendMessage = new SendMessage<>();
-        sendMessage.setChatId(chatId);
-        sendMessage.setText(text);
-        sendMessage.setDisableNotification(disableNotification);
-        this.sendMessage(sendMessage);
+        SendMessageRequest<String> sendMessageRequest = new SendMessageRequest<>();
+        sendMessageRequest.setChatId(chatId);
+        sendMessageRequest.setText(text);
+        sendMessageRequest.setDisableNotification(disableNotification);
+        this.sendMessage(sendMessageRequest);
     }
 
     public void replyPlainText(Integer chatId, String text, Integer replyToMessageId) {
-        SendMessage<String> sendMessage = new SendMessage<>();
-        sendMessage.setChatId(chatId);
-        sendMessage.setText(text);
-        sendMessage.setReplyToMessageId(replyToMessageId);
-        this.sendMessage(sendMessage);
+        SendMessageRequest<String> sendMessageRequest = new SendMessageRequest<>();
+        sendMessageRequest.setChatId(chatId);
+        sendMessageRequest.setText(text);
+        sendMessageRequest.setReplyToMessageId(replyToMessageId);
+        this.sendMessage(sendMessageRequest);
     }
 
 }

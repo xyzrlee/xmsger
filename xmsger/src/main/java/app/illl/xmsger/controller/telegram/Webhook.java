@@ -22,7 +22,7 @@ package app.illl.xmsger.controller.telegram;
 import app.illl.xmsger.constant.Telegram;
 import app.illl.xmsger.service.telegram.RegisterIdService;
 import app.illl.xmsger.service.telegram.SendMessageService;
-import app.illl.xmsger.struct.telegram.Update;
+import app.illl.xmsger.struct.telegram.type.Update;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
