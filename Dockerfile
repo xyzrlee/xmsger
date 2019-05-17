@@ -7,7 +7,7 @@ LABEL maintainer="Ricky Li <cnrickylee@gmail.com>"
 
 USER root
 
-ENV MVNWARGS=-Dmaven.test.skip=true
+ENV MVNWARGS=-Dmaven.test.skip=true --batch-mode --show-version --no-transfer-progress
 
 copy xmsger /repo
 
