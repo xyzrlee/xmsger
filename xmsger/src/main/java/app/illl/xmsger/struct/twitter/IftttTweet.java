@@ -26,6 +26,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.TextStyle;
@@ -55,17 +57,17 @@ public class IftttTweet {
     private String username;
     private String text;
     private String link;
-    private LocalDateTime created;
+    private ZonedDateTime created;
 
     @JsonSetter("created")
     private void convertCreated(String createdString) {
-        this.created = LocalDateTime.parse(createdString, FORMATTER);
+        this.created = ZonedDateTime.of(LocalDateTime.parse(createdString, FORMATTER), ZoneId.systemDefault());
     }
 
     public String toNoticeMessage() {
         return String.format(
-                "%s tweeted at %s\n%s\nlink:%s",
-                this.username, this.created, this.text, this.link
+                "%s tweeted at %s\n%s",
+                this.username, this.created, this.link
         );
     }
 

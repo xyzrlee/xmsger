@@ -28,7 +28,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "air_data", indexes = {@Index(columnList = "city,message_time")})
@@ -47,7 +47,7 @@ public class AirData implements Serializable {
     private String city;
 
     @Column(name = "message_time")
-    private LocalDateTime messageTime;
+    private ZonedDateTime messageTime;
 
     @Convert(converter = AirDescriptionConverter.class)
     private AirDescription description;

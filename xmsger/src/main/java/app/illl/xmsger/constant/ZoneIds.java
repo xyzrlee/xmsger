@@ -17,12 +17,17 @@
  *
  */
 
-package app.illl.xmsger.service.twitter;
+package app.illl.xmsger.constant;
 
-import app.illl.xmsger.struct.AirDescription;
+import java.time.ZoneId;
 
-import java.time.ZonedDateTime;
+public class ZoneIds {
 
-public interface SaveAirDataService {
-    void saveAirDataAsync(String city, ZonedDateTime time, AirDescription airDescription);
+    private ZoneIds() {
+    }
+
+    public static final ZoneId LOCAL = ZoneId.of("Asia/Shanghai");
+
+    public static final ZoneId ASIA_SHANGHAI = ZoneId.of("Asia/Shanghai");
+
 }

@@ -39,8 +39,10 @@ public class TrumpProcessorImpl implements TrumpProcessor {
     }
 
     private void sendNotice(IftttTweet iftttTweet) {
+        String notice = iftttTweet.toNoticeMessage();
+        log.debug("notice:{}", notice);
         for (Integer chatId : telegramRegisteredChatCache.getChatIds()) {
-            this.sendMessageService.sendPlainText(chatId, iftttTweet.toNoticeMessage(), false);
+            this.sendMessageService.sendPlainText(chatId, notice, false);
         }
     }
 

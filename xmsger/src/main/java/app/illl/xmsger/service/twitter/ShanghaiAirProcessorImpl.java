@@ -20,6 +20,7 @@
 package app.illl.xmsger.service.twitter;
 
 import app.illl.xmsger.cache.TelegramRegisteredChatCache;
+import app.illl.xmsger.constant.ZoneIds;
 import app.illl.xmsger.service.telegram.SendMessageService;
 import app.illl.xmsger.struct.AirDescription;
 import app.illl.xmsger.struct.twitter.CGShanghaiAir;
@@ -28,8 +29,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 @TweetProcessor("CGShanghaiAir")
 @Slf4j
@@ -60,7 +60,7 @@ public class ShanghaiAirProcessorImpl implements ShanghaiAirProcessor {
     private void sendWarnMessage(CGShanghaiAir cgShanghaiAir) {
         log.trace("sendMessageService:{}", sendMessageService);
         if (cgShanghaiAir.getAqi() < 100) return;
-        LocalDateTime dateTime = LocalDateTime.now(ZoneId.of("+08:00"));
+        ZonedDateTime dateTime = ZonedDateTime.now(ZoneIds.LOCAL);
         Boolean disableNotification = dateTime.getHour() < 10 || dateTime.getHour() > 20;
         String message = String.format(
                 "shanghai air pollution:\nPM 2.5: %s, AQI: %s, %s",

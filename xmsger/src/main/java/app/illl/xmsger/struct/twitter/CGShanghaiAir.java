@@ -19,6 +19,7 @@
 
 package app.illl.xmsger.struct.twitter;
 
+import app.illl.xmsger.constant.ZoneIds;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -27,6 +28,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
@@ -55,7 +57,7 @@ public class CGShanghaiAir implements Serializable {
                     .appendValue(ChronoField.MINUTE_OF_HOUR, 2)
                     .toFormatter(Locale.ENGLISH);
 
-    private LocalDateTime time;
+    private ZonedDateTime time;
     private BigDecimal fineParticulateMatter;
     private Integer aqi;
     private String comment;
@@ -63,7 +65,7 @@ public class CGShanghaiAir implements Serializable {
     public static CGShanghaiAir of(String text) {
         String[] fields = StringUtils.split(text, ';');
         CGShanghaiAir cgShanghaiAir = new CGShanghaiAir();
-        cgShanghaiAir.setTime(LocalDateTime.parse(fields[0], FORMATTER));
+        cgShanghaiAir.setTime(ZonedDateTime.of(LocalDateTime.parse(fields[0], FORMATTER), ZoneIds.ASIA_SHANGHAI));
         cgShanghaiAir.setFineParticulateMatter(new BigDecimal(fields[2].trim()));
         cgShanghaiAir.setAqi(Integer.valueOf(fields[3].trim()));
         cgShanghaiAir.setComment(fields[4].trim());

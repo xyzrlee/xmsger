@@ -27,7 +27,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Component
 @RequiredArgsConstructor
@@ -36,7 +36,7 @@ public class SaveAirDataServiceImpl implements SaveAirDataService {
     private final AirDataRepository airDataRepository;
 
     @Transactional
-    private void saveAirData(String city, LocalDateTime time, AirDescription airDescription) {
+    private void saveAirData(String city, ZonedDateTime time, AirDescription airDescription) {
         AirData airData = new AirData();
         airData.setMessageTime(time);
         airData.setCity(city);
@@ -46,7 +46,7 @@ public class SaveAirDataServiceImpl implements SaveAirDataService {
 
     @Async
     @Transactional
-    public void saveAirDataAsync(String city, LocalDateTime time, AirDescription airDescription) {
+    public void saveAirDataAsync(String city, ZonedDateTime time, AirDescription airDescription) {
         this.saveAirData(city, time, airDescription);
     }
 

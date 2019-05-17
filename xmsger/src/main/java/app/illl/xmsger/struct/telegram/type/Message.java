@@ -19,6 +19,7 @@
 
 package app.illl.xmsger.struct.telegram.type;
 
+import app.illl.xmsger.constant.ZoneIds;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -28,9 +29,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
+import java.time.Instant;
 import java.time.ZonedDateTime;
 
 @ToString
@@ -52,8 +51,7 @@ public class Message implements Serializable {
 
     @JsonSetter("date")
     public void decodeDate(long epochSeconds) {
-        this.date = LocalDateTime.ofEpochSecond(epochSeconds, 0,
-                OffsetDateTime.now(ZoneId.systemDefault()).getOffset()).atZone(ZoneId.systemDefault());
+        this.date = ZonedDateTime.ofInstant(Instant.ofEpochSecond(epochSeconds), ZoneIds.ASIA_SHANGHAI);
     }
 
     @JsonGetter("date")
