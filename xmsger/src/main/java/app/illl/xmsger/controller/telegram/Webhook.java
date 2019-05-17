@@ -42,14 +42,14 @@ public class Webhook {
     @PostMapping
     public void hook(@RequestBody Update update) {
         if (update == null) return;
-        if (update.getMessage() != null) {
-            registerIdService.registerIdAsync(update.getMessage());
-            sendMessageService.replyPlainText(
-                    update.getMessage().getChat().getId(),
-                    update.getMessage().getText(),
-                    update.getMessage().getMessageId()
-            );
-        }
+        if (update.getMessage() == null) return;
+        if (update.getMessage().getText() == null) return;
+        registerIdService.registerIdAsync(update.getMessage());
+        sendMessageService.replyPlainText(
+                update.getMessage().getChat().getId(),
+                update.getMessage().getText(),
+                update.getMessage().getMessageId()
+        );
     }
 
 }
