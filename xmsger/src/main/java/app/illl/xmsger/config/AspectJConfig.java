@@ -17,13 +17,12 @@
  *
  */
 
-package app.illl.xmsger.service.telegram;
+package app.illl.xmsger.config;
 
-import app.illl.xmsger.struct.telegram.request.SendMessageRequest;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
-public interface SendMessageService {
-    void sendMessage(SendMessageRequest sendMessageRequest);
-    void sendPlainText(Integer chatId, String text);
-    void sendPlainText(Integer chatId, String text, Boolean disableNotification);
-    void replyPlainText(Integer chatId, String text, Integer replyToMessageId);
+@Configuration
+@EnableAspectJAutoProxy
+public class AspectJConfig {
 }

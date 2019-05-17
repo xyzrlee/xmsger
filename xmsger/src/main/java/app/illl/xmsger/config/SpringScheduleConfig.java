@@ -19,32 +19,27 @@
 
 package app.illl.xmsger.config;
 
-import lombok.AccessLevel;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.AsyncConfigurer;
-import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.SchedulingConfigurer;
+import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
-@EnableAsync
-@Slf4j
-@ConditionalOnProperty(name = "app.illl.xmsger.async.enable", havingValue = "true", matchIfMissing = true)
-public class SpringAsyncConfig implements AsyncConfigurer, InitializingBean, DisposableBean {
+@EnableScheduling
+@ConditionalOnProperty(name = "app.illl.xmsger.schedule.enable", havingValue = "true", matchIfMissing = true)
+public class SpringScheduleConfig implements SchedulingConfigurer, InitializingBean, DisposableBean {
 
-    @Setter(AccessLevel.PROTECTED)
     private ExecutorService executor;
 
     private void initializeExecutor() {
-        this.setExecutor(Executors.newCachedThreadPool());
+        this.executor = Executors.newScheduledThreadPool(10);
     }
 
     private void terminateExecutor() {
@@ -61,8 +56,8 @@ public class SpringAsyncConfig implements AsyncConfigurer, InitializingBean, Dis
     }
 
     @Override
-    public Executor getAsyncExecutor() {
-        return this.executor;
+    public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
+        taskRegistrar.setScheduler(this.executor);
     }
 
     @SuppressWarnings("RedundantThrows")

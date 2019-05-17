@@ -45,6 +45,7 @@ public class SaveAirDataServiceImpl implements SaveAirDataService {
     }
 
     @Async
+    @Transactional
     public void saveAirDataAsync(String city, LocalDateTime time, AirDescription airDescription) {
         this.saveAirData(city, time, airDescription);
     }

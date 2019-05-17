@@ -20,6 +20,7 @@
 package app.illl.xmsger.aop;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
@@ -37,9 +38,13 @@ public class SendMessageAop {
     )
     public void doAround(final ProceedingJoinPoint proceedingJoinPoint
             , Integer chatId, String text
-    ) {
-        Signature signature = proceedingJoinPoint.getSignature();
-        log.info("{} skipped using Aspect, text: {}", signature.getName(), text);
+    ) throws Throwable {
+        if (NumberUtils.compare(chatId, 1) == 0) {
+            Signature signature = proceedingJoinPoint.getSignature();
+            log.info("{} skipped using Aspect, text: {}", signature.getName(), text);
+        } else {
+            proceedingJoinPoint.proceed();
+        }
     }
 
 }

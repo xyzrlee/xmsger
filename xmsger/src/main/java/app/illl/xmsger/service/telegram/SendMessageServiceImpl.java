@@ -47,7 +47,8 @@ public class SendMessageServiceImpl implements SendMessageService {
 
     private final GetUrlService getUrlService;
 
-    private void sendMessage(SendMessageRequest sendMessageRequest) {
+    @Override
+    public void sendMessage(SendMessageRequest sendMessageRequest) {
         URI uri = URI.create(getUrlService.getUrl(Telegram.METHOD_SEND_MESSAGE));
         try (CloseableHttpClient httpClient = HttpClientUtils.getDefaultHttpClient()) {
             HttpPost request = new HttpPost();
@@ -66,10 +67,12 @@ public class SendMessageServiceImpl implements SendMessageService {
         }
     }
 
+    @Override
     public void sendPlainText(Integer chatId, String text) {
         this.sendPlainText(chatId, text, false);
     }
 
+    @Override
     public void sendPlainText(Integer chatId, String text, Boolean disableNotification) {
         SendMessageRequest<String> sendMessageRequest = new SendMessageRequest<>();
         sendMessageRequest.setChatId(chatId);
