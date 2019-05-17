@@ -19,8 +19,11 @@
   ~
   -->
 
-<configuration>
-    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+<configuration scan="true" scanPeriod="10 seconds">
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+    <property name="LOG_FILE" value="logs/xmsger.log"/>
+    <include resource="org/springframework/boot/logging/logback/file-appender.xml"/>
     <logger name="org.apache.tomcat" level="info"/>
     <logger name="app.illl.xmsger" level="trace"/>
     <logger name="org.apache.http.headers" level="debug"/>
@@ -28,5 +31,8 @@
     <logger name="org.apache.http.impl.conn.DefaultHttpClientConnectionOperator" level="debug"/>
     <logger name="org.hibernate.SQL" level="trace"/>
     <logger name="org.hibernate.resource.jdbc.internal.AbstractLogicalConnectionImplementor" level="trace"/>
-    <root level="info"/>
+    <root level="info">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
 </configuration>

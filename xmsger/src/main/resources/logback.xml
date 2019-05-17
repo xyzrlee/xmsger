@@ -19,8 +19,10 @@
   ~
   -->
 
-<configuration>
-    <include resource="org/springframework/boot/logging/logback/base.xml"/>
-    <logger name="app.illl.xmsger" level="trace"/>
-    <root level="info"/>
-</configuration>
+<included>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+    </root>
+</included>
