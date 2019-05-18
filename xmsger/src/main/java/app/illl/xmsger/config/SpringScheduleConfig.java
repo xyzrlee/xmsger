@@ -19,7 +19,7 @@
 
 package app.illl.xmsger.config;
 
-import app.illl.xmsger.exception.UnexpectedException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -35,6 +35,7 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 @EnableScheduling
 @ConditionalOnProperty(name = "app.illl.xmsger.schedule.enable", havingValue = "true", matchIfMissing = true)
+@Slf4j
 public class SpringScheduleConfig implements SchedulingConfigurer, InitializingBean, DisposableBean {
 
     private ExecutorService executor;
@@ -49,7 +50,8 @@ public class SpringScheduleConfig implements SchedulingConfigurer, InitializingB
         try {
             this.executor.awaitTermination(10, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
-            throw new UnexpectedException(e);
+            log.error("", e);
+            Thread.currentThread().interrupt();
         } finally {
             if (!this.executor.isTerminated()) {
                 this.executor.shutdownNow();

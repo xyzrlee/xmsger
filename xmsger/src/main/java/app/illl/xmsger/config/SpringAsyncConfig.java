@@ -19,7 +19,6 @@
 
 package app.illl.xmsger.config;
 
-import app.illl.xmsger.exception.UnexpectedException;
 import lombok.AccessLevel;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -54,7 +53,8 @@ public class SpringAsyncConfig implements AsyncConfigurer, InitializingBean, Dis
         try {
             this.executor.awaitTermination(10, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
-            throw new UnexpectedException(e);
+            log.error("", e);
+            Thread.currentThread().interrupt();
         } finally {
             if (!this.executor.isTerminated()) {
                 this.executor.shutdownNow();
