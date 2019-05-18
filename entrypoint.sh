@@ -2,4 +2,4 @@
 
 cd /xmsger
 ls -lh
-java $@ -jar xmsger.jar
+sudo -u ${RUNAS} java ${JVMARGS} -jar xmsger.jar

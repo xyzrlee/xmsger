@@ -14,23 +14,22 @@ COPY xmsger /repo
 RUN set -ex \
  # Build environment setup
  && apk update \
- && apk add --no-cache --virtual .build-deps \
-      openjdk8 \
+ && apk add --no-cache openjdk8 openjdk8-jre sudo \
  # Build & install
  && cd /repo \
  && chmod +x mvnw \
  && ./mvnw clean package ${MVNWARGS}\
  && mkdir -p /xmsger \
  && cp target/xmsger.jar /xmsger/ \
- && ./mvnw clean \
  && rm -rf /repo \
  && rm -rf ${HOME}/.m2 \
- && apk del .build-deps \
- && ls -l /xmsger \
- && apk add --no-cache openjdk8-jre
+ && ls -l /xmsger
+
+ENV PATH=${PATH}:/usr/lib/jvm/java-1.8-openjdk/bin
 
 COPY entrypoint.sh /xmsger/entrypoint.sh
 
-ARG JVMARGS=
+ENV RUNAS=root
+ENV JVMARGS=
 
-ENTRYPOINT /xmsger/entrypoint.sh ${JVMARGS}
+ENTRYPOINT /xmsger/entrypoint.sh
