@@ -27,6 +27,9 @@ import java.io.IOException;
 
 public class JsonUtils {
 
+    private JsonUtils() {
+    }
+
     private static final ObjectMapper DEFAULT_OBJECT_MAPPER = new ObjectMapper();
 
     public static String toJson(Object object) {

@@ -66,7 +66,7 @@ public class IftttTweet {
 
     public String toNoticeMessage() {
         return String.format(
-                "%s tweeted at %s\n%s",
+                "%s tweeted at %s%n%s",
                 this.username, this.created, this.link
         );
     }

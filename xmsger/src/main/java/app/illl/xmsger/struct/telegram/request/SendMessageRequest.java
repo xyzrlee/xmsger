@@ -31,7 +31,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class SendMessageRequest<T> implements Serializable {
+public class SendMessageRequest<T extends Serializable> implements Serializable {
     private static final long serialVersionUID = 5952926161239436547L;
     @JsonProperty("chat_id")
     private Integer chatId;

@@ -63,7 +63,7 @@ public class ShanghaiAirProcessorImpl implements ShanghaiAirProcessor {
         ZonedDateTime dateTime = ZonedDateTime.now(ZoneIds.LOCAL);
         Boolean disableNotification = dateTime.getHour() < 10 || dateTime.getHour() > 20;
         String message = String.format(
-                "shanghai air pollution:\nPM 2.5: %s, AQI: %s, %s",
+                "shanghai air pollution:%nPM 2.5: %s, AQI: %s, %s",
                 cgShanghaiAir.getFineParticulateMatter(), cgShanghaiAir.getAqi(), cgShanghaiAir.getComment()
         );
         log.debug("warnMessage:{}", message);
