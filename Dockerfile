@@ -9,7 +9,7 @@ USER root
 
 ENV MVNWARGS="-Dmaven.test.skip=true --batch-mode --show-version --no-transfer-progress"
 
-copy xmsger /repo
+COPY xmsger /repo
 
 RUN set -ex \
  # Build environment setup

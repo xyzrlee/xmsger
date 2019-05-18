@@ -3,6 +3,7 @@
 
 # Log file
 *.log
+xmsger/logs
 
 # BlueJ files
 *.ctxt

@@ -2,4 +2,4 @@
 
 cd /xmsger
 ls -lh
-java -jar xmsger.jar $@
+java $@ -jar xmsger.jar
