@@ -17,31 +17,19 @@
  *
  */
 
-package app.illl.xmsger.datasource.entity;
+package app.illl.xmsger.service.twitter;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import app.illl.xmsger.constant.TweetProcessorId;
+import app.illl.xmsger.struct.twitter.IftttTweet;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.io.Serializable;
+@TweetProcessor(TweetProcessorId.DEFAULT_ANALYSE)
+@Slf4j
+@RequiredArgsConstructor
+public class DefaultAnalyseProcessorImpl implements DefaultAnalyseProcessor {
+    @Override
+    public void process(IftttTweet iftttTweet) {
 
-@Entity
-@Table(name = "telegram_registered_chat")
-@ToString
-@Setter
-@Getter
-@EqualsAndHashCode
-public class TelegramRegisteredChat implements Serializable {
-
-    private static final long serialVersionUID = -7122130317829720849L;
-
-    @Id
-    @Column(name = "chat_id")
-    private Integer chatId;
-
+    }
 }

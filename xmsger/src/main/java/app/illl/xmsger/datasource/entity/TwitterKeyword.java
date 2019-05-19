@@ -19,29 +19,32 @@
 
 package app.illl.xmsger.datasource.entity;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "telegram_registered_chat")
+@Table(name = "twitter_keyword", indexes = {@Index(columnList = "username,keyword")})
 @ToString
-@Setter
 @Getter
+@Setter
 @EqualsAndHashCode
-public class TelegramRegisteredChat implements Serializable {
+public class TwitterKeyword implements Serializable {
 
-    private static final long serialVersionUID = -7122130317829720849L;
+    public static final String STATUS_IS_ACTIVATED = "ACTIVATED";
+
+    private static final long serialVersionUID = 1339031298792407540L;
 
     @Id
-    @Column(name = "chat_id")
-    private Integer chatId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
+    private Integer id;
+
+    private String username;
+
+    private String keyword;
+
+    private String status;
 
 }

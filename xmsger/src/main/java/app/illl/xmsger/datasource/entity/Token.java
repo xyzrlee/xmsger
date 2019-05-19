@@ -19,6 +19,7 @@
 
 package app.illl.xmsger.datasource.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -31,17 +32,16 @@ import java.io.Serializable;
 @Entity
 @Table(name = "token")
 @ToString
+@Setter
+@Getter
+@EqualsAndHashCode
 public class Token implements Serializable {
 
     private static final long serialVersionUID = 1757200744714460797L;
 
     @Id
-    @Getter
-    @Setter
     private String site;
 
-    @Getter
-    @Setter
     private String token;
 
 }

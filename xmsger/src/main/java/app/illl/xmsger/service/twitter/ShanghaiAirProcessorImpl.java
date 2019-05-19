@@ -20,6 +20,7 @@
 package app.illl.xmsger.service.twitter;
 
 import app.illl.xmsger.cache.TelegramRegisteredChatCache;
+import app.illl.xmsger.constant.TweetProcessorId;
 import app.illl.xmsger.constant.ZoneIds;
 import app.illl.xmsger.service.telegram.SendMessageService;
 import app.illl.xmsger.struct.AirDescription;
@@ -31,7 +32,7 @@ import org.springframework.scheduling.annotation.Async;
 
 import java.time.ZonedDateTime;
 
-@TweetProcessor("CGShanghaiAir")
+@TweetProcessor(TweetProcessorId.C_G_SHANGHAI_AIR)
 @Slf4j
 @RequiredArgsConstructor
 public class ShanghaiAirProcessorImpl implements ShanghaiAirProcessor {

@@ -17,31 +17,15 @@
  *
  */
 
-package app.illl.xmsger.datasource.entity;
+package app.illl.xmsger.constant;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+public class TweetProcessorId {
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.io.Serializable;
+    private TweetProcessorId() {
+    }
 
-@Entity
-@Table(name = "telegram_registered_chat")
-@ToString
-@Setter
-@Getter
-@EqualsAndHashCode
-public class TelegramRegisteredChat implements Serializable {
+    public static final String C_G_SHANGHAI_AIR = "CGShanghaiAir";
 
-    private static final long serialVersionUID = -7122130317829720849L;
-
-    @Id
-    @Column(name = "chat_id")
-    private Integer chatId;
+    public static final String DEFAULT_ANALYSE = "__DEFAULT_ANALYSE__";
 
 }
