@@ -30,7 +30,9 @@
     <logger name="org.apache.http.wire" level="debug"/>
     <logger name="org.apache.http.impl.conn.DefaultHttpClientConnectionOperator" level="debug"/>
     <logger name="org.hibernate.SQL" level="trace"/>
+    <logger name="org.hibernate.type" level="trace"/>
     <logger name="org.hibernate.resource.jdbc.internal.AbstractLogicalConnectionImplementor" level="trace"/>
+    <logger name="org.springframework.cache" level="trace"/>
     <root level="info">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>

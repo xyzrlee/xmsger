@@ -20,6 +20,9 @@
 package app.illl.xmsger.datasource.entity;
 
 import lombok.*;
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -30,6 +33,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @EqualsAndHashCode
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class TwitterKeyword implements Serializable {
 
     public static final String STATUS_IS_ACTIVATED = "ACTIVATED";
@@ -46,5 +50,9 @@ public class TwitterKeyword implements Serializable {
     private String keyword;
 
     private String status;
+
+    public boolean isActivated() {
+        return StringUtils.equals(this.status, STATUS_IS_ACTIVATED);
+    }
 
 }
