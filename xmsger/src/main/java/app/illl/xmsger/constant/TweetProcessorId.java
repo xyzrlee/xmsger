@@ -17,7 +17,15 @@
  *
  */
 
-package app.illl.xmsger.service.twitter;
+package app.illl.xmsger.constant;
 
-interface TrumpProcessor extends IftttTweetProcessor {
+public class TweetProcessorId {
+
+    private TweetProcessorId() {
+    }
+
+    public static final String C_G_SHANGHAI_AIR = "CGShanghaiAir";
+
+    public static final String DEFAULT_ANALYSE = "__DEFAULT_ANALYSE__";
+
 }

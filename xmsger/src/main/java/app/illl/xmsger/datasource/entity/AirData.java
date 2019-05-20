@@ -21,10 +21,7 @@ package app.illl.xmsger.datasource.entity;
 
 import app.illl.xmsger.datasource.converter.AirDescriptionConverter;
 import app.illl.xmsger.struct.AirDescription;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -35,6 +32,7 @@ import java.time.ZonedDateTime;
 @ToString
 @Setter
 @Getter
+@EqualsAndHashCode
 public class AirData implements Serializable {
 
     private static final long serialVersionUID = -1212684681390328438L;

@@ -17,31 +17,15 @@
  *
  */
 
-package app.illl.xmsger.datasource.entity;
+package app.illl.xmsger.datasource.repository;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import app.illl.xmsger.datasource.entity.TwitterKeyword;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.io.Serializable;
-
-@Entity
-@Table(name = "telegram_registered_chat")
-@ToString
-@Setter
-@Getter
-@EqualsAndHashCode
-public class TelegramRegisteredChat implements Serializable {
-
-    private static final long serialVersionUID = -7122130317829720849L;
-
-    @Id
-    @Column(name = "chat_id")
-    private Integer chatId;
-
+@Repository
+public interface TwitterKeywordRepository extends CrudRepository<TwitterKeyword, Integer> {
+    @Query("select e from #{#entityName} e where e.username = ?1")
+    Iterable<TwitterKeyword> findByUsername(String username);
 }

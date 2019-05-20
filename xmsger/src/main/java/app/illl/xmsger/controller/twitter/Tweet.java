@@ -19,6 +19,7 @@
 
 package app.illl.xmsger.controller.twitter;
 
+import app.illl.xmsger.constant.TweetProcessorId;
 import app.illl.xmsger.constant.Twitter;
 import app.illl.xmsger.service.twitter.IftttTweetProcessor;
 import app.illl.xmsger.service.twitter.TweetProcessor;
@@ -49,6 +50,9 @@ public class Tweet implements ApplicationListener<ContextRefreshedEvent> {
     @PostMapping
     public void post(@RequestBody IftttTweet iftttTweet) {
         IftttTweetProcessor processor = serviceMap.get(iftttTweet.getUsername());
+        if (null == processor) {
+            processor = this.serviceMap.get(TweetProcessorId.DEFAULT_ANALYSE);
+        }
         if (null == processor) {
             log.warn("no processor, username:{}", iftttTweet.getUsername());
             return;

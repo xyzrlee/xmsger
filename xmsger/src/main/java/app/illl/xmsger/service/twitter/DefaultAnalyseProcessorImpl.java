@@ -20,30 +20,42 @@
 package app.illl.xmsger.service.twitter;
 
 import app.illl.xmsger.cache.TelegramRegisteredChatCache;
+import app.illl.xmsger.constant.TweetProcessorId;
+import app.illl.xmsger.datasource.service.TwitterKeywordService;
 import app.illl.xmsger.service.telegram.SendMessageService;
 import app.illl.xmsger.struct.twitter.IftttTweet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
-@TweetProcessor("realDonaldTrump")
+import java.util.List;
+
+@TweetProcessor(TweetProcessorId.DEFAULT_ANALYSE)
 @Slf4j
 @RequiredArgsConstructor
-public class TrumpProcessorImpl implements TrumpProcessor {
+public class DefaultAnalyseProcessorImpl implements DefaultAnalyseProcessor {
 
+    private final TwitterKeywordService twitterKeywordService;
     private final SendMessageService sendMessageService;
     private final TelegramRegisteredChatCache telegramRegisteredChatCache;
 
     @Override
     public void process(IftttTweet iftttTweet) {
-        this.sendNotice(iftttTweet);
+        if (containsKeyword(iftttTweet)) {
+            for (Integer chatId : telegramRegisteredChatCache.getChatIds()) {
+                sendMessageService.sendPlainText(chatId, iftttTweet.toNoticeMessage(), true);
+            }
+        }
     }
 
-    private void sendNotice(IftttTweet iftttTweet) {
-        String notice = iftttTweet.toNoticeMessage();
-        log.debug("notice:{}", notice);
-        for (Integer chatId : telegramRegisteredChatCache.getChatIds()) {
-            this.sendMessageService.sendPlainText(chatId, notice, false);
+    private boolean containsKeyword(IftttTweet iftttTweet) {
+        List<String> twitterKeywords = twitterKeywordService.getKeywordByUsername(iftttTweet.getUsername());
+        for (String keyword : twitterKeywords) {
+            if (StringUtils.containsIgnoreCase(iftttTweet.getText(), keyword)) {
+                return true;
+            }
         }
+        return false;
     }
 
 }
