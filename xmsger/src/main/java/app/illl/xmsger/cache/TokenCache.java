@@ -20,7 +20,7 @@
 package app.illl.xmsger.cache;
 
 import app.illl.xmsger.datasource.entity.Token;
-import app.illl.xmsger.datasource.repository.TokenRepository;
+import app.illl.xmsger.datasource.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +36,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class TokenCache implements InitializingBean {
 
-    private final TokenRepository tokenRepository;
+    private final TokenService tokenService;
     private Map<String, Token> dataMap;
 
     public Token getToken(String site) {
@@ -47,7 +47,7 @@ public class TokenCache implements InitializingBean {
     @Synchronized
     private void refresh() {
         Map<String, Token> tempMap = new HashMap<>();
-        Iterable<Token> tokens = tokenRepository.findAll();
+        Iterable<Token> tokens = tokenService.findAll();
         for (Token token : tokens) {
             tempMap.put(token.getSite(), token);
         }

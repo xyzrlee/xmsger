@@ -28,8 +28,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.List;
-
 @TweetProcessor(TweetProcessorId.DEFAULT_ANALYSE)
 @Slf4j
 @RequiredArgsConstructor
@@ -49,7 +47,7 @@ public class DefaultAnalyseProcessorImpl implements DefaultAnalyseProcessor {
     }
 
     private boolean containsKeyword(IftttTweet iftttTweet) {
-        List<String> twitterKeywords = twitterKeywordService.getKeywordByUsername(iftttTweet.getUsername());
+        Iterable<String> twitterKeywords = twitterKeywordService.getKeywordByUsername(iftttTweet.getUsername());
         for (String keyword : twitterKeywords) {
             if (StringUtils.containsIgnoreCase(iftttTweet.getText(), keyword)) {
                 return true;
