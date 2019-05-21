@@ -33,7 +33,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ShanghaiAirProcessorTest {
+public class ShanghaiAirProcessorImplTest {
 
     @Autowired
     private MockMvc mvc;

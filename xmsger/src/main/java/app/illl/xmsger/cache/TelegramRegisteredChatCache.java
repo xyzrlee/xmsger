@@ -19,8 +19,7 @@
 
 package app.illl.xmsger.cache;
 
-import app.illl.xmsger.datasource.entity.TelegramRegisteredChat;
-import app.illl.xmsger.datasource.repository.TelegramRegisteredChatRepository;
+import app.illl.xmsger.datasource.service.TelegramRegisteredChatService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Synchronized;
@@ -37,7 +36,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class TelegramRegisteredChatCache implements InitializingBean {
 
-    private final TelegramRegisteredChatRepository telegramRegisteredChatRepository;
+    private final TelegramRegisteredChatService telegramRegisteredChatService;
     @Getter
     private Set<Integer> chatIds;
 
@@ -45,9 +44,9 @@ public class TelegramRegisteredChatCache implements InitializingBean {
     @Synchronized
     private void refresh() {
         Set<Integer> data = new HashSet<>();
-        Iterable<TelegramRegisteredChat> chats = this.telegramRegisteredChatRepository.findAll();
-        for (TelegramRegisteredChat chat : chats) {
-            data.add(chat.getChatId());
+        Iterable<Integer> ids = this.telegramRegisteredChatService.getAllChatId();
+        for (Integer chatId : ids) {
+            data.add(chatId);
         }
         this.chatIds = data;
         log.debug("telegramRegisteredChatCache:{}", data.size());

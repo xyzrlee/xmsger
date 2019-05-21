@@ -32,7 +32,7 @@ public class GetUrlServiceImpl implements GetUrlService {
     private final TokenCache tokenCache;
 
     public String getUrl(String method) {
-        return Telegram.BASE_URL + tokenCache.getToken(TokenSites.TELEGRAM).getToken() + "/" + method;
+        return Telegram.BASE_URL + tokenCache.getToken(TokenSites.TELEGRAM).getData() + "/" + method;
     }
 
 }

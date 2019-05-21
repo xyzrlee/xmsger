@@ -20,7 +20,7 @@
 package app.illl.xmsger.service.telegram;
 
 import app.illl.xmsger.datasource.entity.TelegramChat;
-import app.illl.xmsger.datasource.repository.TelegramChatRepository;
+import app.illl.xmsger.datasource.service.TelegramChatService;
 import app.illl.xmsger.struct.telegram.type.Message;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
@@ -32,7 +32,7 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class RegisterIdServiceImpl implements RegisterIdService {
 
-    private final TelegramChatRepository telegramChatRepository;
+    private final TelegramChatService telegramChatService;
 
     @Transactional
     public void registerId(Message message) {
@@ -42,7 +42,7 @@ public class RegisterIdServiceImpl implements RegisterIdService {
         String username = message.getChat().getUsername();
         String type = message.getChat().getType();
         Integer messageId = message.getMessageId();
-        TelegramChat telegramChat = telegramChatRepository.findById(chatId).orElse(null);
+        TelegramChat telegramChat = telegramChatService.findById(chatId);
         if (null != telegramChat && telegramChat.getChatId() >= chatId) {
             return;
         }
@@ -53,7 +53,7 @@ public class RegisterIdServiceImpl implements RegisterIdService {
         telegramChat.setUsername(username);
         telegramChat.setType(type);
         telegramChat.setMessageId(messageId);
-        telegramChatRepository.save(telegramChat);
+        telegramChatService.save(telegramChat);
     }
 
     @Async
