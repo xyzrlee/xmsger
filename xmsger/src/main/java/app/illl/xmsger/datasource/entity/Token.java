@@ -42,6 +42,6 @@ public class Token implements Serializable {
     @Id
     private String site;
 
-    private String token;
+    private String data;
 
 }
