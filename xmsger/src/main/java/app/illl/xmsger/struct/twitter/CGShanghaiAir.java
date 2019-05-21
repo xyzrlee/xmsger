@@ -72,4 +72,11 @@ public class CGShanghaiAir implements Serializable {
         return cgShanghaiAir;
     }
 
+    public String toDetailMessage() {
+        return String.format(
+                "PM 2.5: %s, AQI: %s, %s",
+                getFineParticulateMatter(), getAqi(), getComment()
+        );
+    }
+
 }
