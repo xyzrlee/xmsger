@@ -50,9 +50,11 @@ public class DefaultAnalyseProcessorImpl implements DefaultAnalyseProcessor {
         Iterable<String> twitterKeywords = twitterKeywordService.getKeywordByUsername(iftttTweet.getUsername());
         for (String keyword : twitterKeywords) {
             if (StringUtils.containsIgnoreCase(iftttTweet.getText(), keyword)) {
+                log.trace("hit keyword \"{}\"", keyword);
                 return true;
             }
         }
+        log.trace("no keyword hit");
         return false;
     }
 
