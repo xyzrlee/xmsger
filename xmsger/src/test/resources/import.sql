@@ -1,4 +1,4 @@
-insert into token (site, token) values ('telegram', '__skip__');
+insert into token (site, data) values ('telegram', '__skip__');
 insert into telegram_registered_chat (chat_id) values (1);
 insert into telegram_chat (chat_id,username,type,message_id) values (123,'asdf','private',123);
 insert into twitter_keyword (id,username,keyword,status) values (1,'realDonaldTrump','test1','ACTIVATED');
