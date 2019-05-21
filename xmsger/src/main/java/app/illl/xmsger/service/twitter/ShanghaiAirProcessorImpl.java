@@ -22,6 +22,7 @@ package app.illl.xmsger.service.twitter;
 import app.illl.xmsger.cache.TelegramRegisteredChatCache;
 import app.illl.xmsger.constant.TweetProcessorId;
 import app.illl.xmsger.constant.ZoneIds;
+import app.illl.xmsger.datasource.service.AirDataService;
 import app.illl.xmsger.service.telegram.SendMessageService;
 import app.illl.xmsger.struct.AirDescription;
 import app.illl.xmsger.struct.twitter.CGShanghaiAir;
@@ -37,7 +38,7 @@ import java.time.ZonedDateTime;
 @RequiredArgsConstructor
 public class ShanghaiAirProcessorImpl implements ShanghaiAirProcessor {
 
-    private final SaveAirDataService saveAirDataService;
+    private final AirDataService airDataService;
     private final TelegramRegisteredChatCache telegramRegisteredChatCache;
     private final SendMessageService sendMessageService;
 
@@ -54,7 +55,7 @@ public class ShanghaiAirProcessorImpl implements ShanghaiAirProcessor {
         airDescription.setFineParticulateMatter(cgShanghaiAir.getFineParticulateMatter());
         airDescription.setAqi(cgShanghaiAir.getAqi());
         airDescription.setComment(cgShanghaiAir.getComment());
-        saveAirDataService.saveAirDataAsync("Shanghai", cgShanghaiAir.getTime(), airDescription);
+        airDataService.saveAirDataAsync("Shanghai", cgShanghaiAir.getTime(), airDescription);
     }
 
     @Async
