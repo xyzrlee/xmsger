@@ -5,3 +5,13 @@ insert into twitter_keyword (id,username,keyword,status) values (1,'realDonaldTr
 insert into twitter_keyword (id,username,keyword,status) values (2,'realDonaldTrump','TeSt2','ACTIVATED');
 insert into twitter_keyword (id,username,keyword,status) values (3,'realDonaldTrump','TEST3','');
 insert into twitter_keyword (id,username,keyword,status) values (4,'TEST4','TEST4','ACTIVATED');
+INSERT INTO air_data (id, city, message_time, description) VALUES (-1 'Shanghai', '2019-05-15 15:00:00+08', '{"comment":"Moderate (at 24-hour exposure at this level)","PM2.5":21.0,"AQI":70}');
+INSERT INTO air_data (id, city, message_time, description) VALUES (-2, 'Shanghai', '2019-05-15 16:00:00+08', '{"comment":"Moderate (at 24-hour exposure at this level)","PM2.5":13.0,"AQI":53}');
+INSERT INTO air_data (id, city, message_time, description) VALUES (-3, 'Shanghai', '2019-05-15 17:00:00+08', '{"comment":"Moderate (at 24-hour exposure at this level)","PM2.5":13.0,"AQI":53}');
+INSERT INTO air_data (id, city, message_time, description) VALUES (-4, 'Shanghai', '2019-05-15 18:00:00+08', '{"comment":"Moderate (at 24-hour exposure at this level)","PM2.5":18.0,"AQI":64}');
+INSERT INTO air_data (id, city, message_time, description) VALUES (-5, 'Shanghai', '2019-05-15 19:00:00+08', '{"comment":"Moderate (at 24-hour exposure at this level)","PM2.5":17.0,"AQI":61}');
+INSERT INTO air_data (id, city, message_time, description) VALUES (-6, 'Shanghai', '2019-05-15 20:00:00+08', '{"comment":"Moderate (at 24-hour exposure at this level)","PM2.5":20.0,"AQI":68}');
+INSERT INTO air_data (id, city, message_time, description) VALUES (-7, 'Shanghai', '2019-05-15 21:00:00+08', '{"comment":"Moderate (at 24-hour exposure at this level)","PM2.5":22.0,"AQI":72}');
+INSERT INTO air_data (id, city, message_time, description) VALUES (-8, 'Shanghai', '2019-05-15 22:00:00+08', '{"comment":"Moderate (at 24-hour exposure at this level)","PM2.5":15.0,"AQI":57}');
+INSERT INTO air_data (id, city, message_time, description) VALUES (-9, 'Shanghai', '2019-05-15 23:00:00+08', '{"comment":"Moderate (at 24-hour exposure at this level)","PM2.5":15.0,"AQI":57}');
+INSERT INTO air_data (id, city, message_time, description) VALUES (-10, 'Shanghai', '2019-05-16 00:00:00+08', '{"comment":"Moderate (at 24-hour exposure at this level)","PM2.5":12.0,"AQI":51}');

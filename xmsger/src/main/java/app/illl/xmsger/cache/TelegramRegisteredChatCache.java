@@ -25,7 +25,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -40,9 +39,8 @@ public class TelegramRegisteredChatCache implements InitializingBean {
     @Getter
     private Set<Integer> chatIds;
 
-    @Scheduled(cron = "0 */10 * * * *")
     @Synchronized
-    private void refresh() {
+    public void refresh() {
         Set<Integer> data = new HashSet<>();
         Iterable<Integer> ids = this.telegramRegisteredChatService.getAllChatId();
         for (Integer chatId : ids) {

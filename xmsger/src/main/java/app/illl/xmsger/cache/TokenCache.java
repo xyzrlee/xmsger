@@ -25,7 +25,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -43,9 +42,8 @@ public class TokenCache implements InitializingBean {
         return dataMap.get(site);
     }
 
-    @Scheduled(cron = "0 */10 * * * *")
     @Synchronized
-    private void refresh() {
+    public void refresh() {
         Map<String, Token> tempMap = new HashMap<>();
         Iterable<Token> tokens = tokenService.findAll();
         for (Token token : tokens) {

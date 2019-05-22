@@ -2,6 +2,7 @@ package app.illl.xmsger.datasource.service;
 
 import app.illl.xmsger.datasource.entity.AirData;
 import app.illl.xmsger.struct.AirDescription;
+import org.springframework.data.domain.Page;
 
 import java.time.ZonedDateTime;
 
@@ -13,4 +14,7 @@ public interface AirDataService {
 
     Iterable<AirData> getLatestData(String city, ZonedDateTime zonedDateTime, Integer count);
 
+    Page<AirData> getDataBeforeTime(ZonedDateTime zonedDateTime, Integer page, Integer size);
+
+    void deleteBeforeTime(ZonedDateTime zonedDateTime, Integer size);
 }
