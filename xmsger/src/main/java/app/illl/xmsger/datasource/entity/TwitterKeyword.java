@@ -26,7 +26,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "twitter_keyword", indexes = {@Index(columnList = "username,keyword")})
+@Table(name = "twitter_keyword", indexes = {
+        @Index(columnList = "username,keyword", name = "twitter_keyword_username_keyword")
+})
 @ToString
 @Getter
 @Setter

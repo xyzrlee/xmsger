@@ -28,7 +28,9 @@ import java.io.Serializable;
 import java.time.ZonedDateTime;
 
 @Entity
-@Table(name = "air_data", indexes = {@Index(columnList = "city,message_time")})
+@Table(name = "air_data", indexes = {
+        @Index(columnList = "city,message_time", name = "air_data_city_message_time")
+})
 @ToString
 @Setter
 @Getter
