@@ -26,8 +26,8 @@ public class ZoneIds {
     private ZoneIds() {
     }
 
-    public static final ZoneId LOCAL = ZoneId.of("Asia/Shanghai");
+    public static final ZoneId LOCAL = ZoneId.of(ZoneNames.ASIA_SHANGHAI);
 
-    public static final ZoneId ASIA_SHANGHAI = ZoneId.of("Asia/Shanghai");
+    public static final ZoneId ASIA_SHANGHAI = ZoneId.of(ZoneNames.ASIA_SHANGHAI);
 
 }
