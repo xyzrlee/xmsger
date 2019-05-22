@@ -19,29 +19,32 @@
 
 package app.illl.xmsger.config;
 
+import lombok.AccessLevel;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.SchedulingConfigurer;
-import org.springframework.scheduling.config.ScheduledTaskRegistrar;
+import org.springframework.scheduling.annotation.AsyncConfigurer;
+import org.springframework.scheduling.annotation.EnableAsync;
 
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
-@EnableScheduling
-@ConditionalOnProperty(name = "app.illl.xmsger.schedule.enable", havingValue = "true", matchIfMissing = true)
+@EnableAsync
 @Slf4j
-public class SpringScheduleConfig implements SchedulingConfigurer, InitializingBean, DisposableBean {
+@ConditionalOnProperty(name = "app.illl.xmsger.async.enable", havingValue = "true", matchIfMissing = true)
+public class AsyncConfig implements AsyncConfigurer, InitializingBean, DisposableBean {
 
+    @Setter(AccessLevel.PROTECTED)
     private ExecutorService executor;
 
     private void initializeExecutor() {
-        this.executor = Executors.newScheduledThreadPool(10);
+        this.setExecutor(Executors.newCachedThreadPool());
     }
 
     private void terminateExecutor() {
@@ -56,12 +59,13 @@ public class SpringScheduleConfig implements SchedulingConfigurer, InitializingB
             if (!this.executor.isTerminated()) {
                 this.executor.shutdownNow();
             }
+
         }
     }
 
     @Override
-    public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
-        taskRegistrar.setScheduler(this.executor);
+    public Executor getAsyncExecutor() {
+        return this.executor;
     }
 
     @SuppressWarnings("RedundantThrows")
