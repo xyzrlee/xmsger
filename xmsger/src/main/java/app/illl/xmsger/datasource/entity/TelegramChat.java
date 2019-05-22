@@ -28,7 +28,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "telegram_chat", indexes = {@Index(columnList = "username")})
+@Table(name = "telegram_chat", indexes = {
+        @Index(columnList = "username", name = "telegram_chat_username")
+})
 @ToString
 @Setter
 @Getter
