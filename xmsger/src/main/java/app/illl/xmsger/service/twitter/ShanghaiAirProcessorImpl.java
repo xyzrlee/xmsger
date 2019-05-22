@@ -65,16 +65,18 @@ public class ShanghaiAirProcessorImpl implements ShanghaiAirProcessor {
     @Async
     private void sendWarnMessage(CGShanghaiAir cgShanghaiAir) {
         log.trace("sendMessageService:{}", sendMessageService);
-        if (AqiUtils.isUnhealthy(cgShanghaiAir.getAqi())) {
+        if (!AqiUtils.isUnhealthy(cgShanghaiAir.getAqi())) {
             return;
         }
         Boolean disableNotification = isDoNotDisturbTime();
-        StringBuilder stringBuilder = new StringBuilder("shanghai air pollution");
+        StringBuilder stringBuilder = new StringBuilder("shanghai air pollution notice");
         Long durationHours = getDurationHours(cgShanghaiAir);
-        String message = String.format(
-                "shanghai air pollution:%nPM 2.5: %s, AQI: %s, %s",
-                cgShanghaiAir.getFineParticulateMatter(), cgShanghaiAir.getAqi(), cgShanghaiAir.getComment()
-        );
+        if (durationHours > 1) {
+            stringBuilder.append(", lasted for ").append(durationHours).append(" hours");
+        }
+        stringBuilder.append(".");
+        stringBuilder.append('\n').append(cgShanghaiAir.toDetailMessage());
+        String message = stringBuilder.toString();
         log.debug("warnMessage:{}", message);
         log.debug("sending to {} ids", telegramRegisteredChatCache.getChatIds().size());
         for (Integer chatId : telegramRegisteredChatCache.getChatIds()) {
@@ -91,23 +93,28 @@ public class ShanghaiAirProcessorImpl implements ShanghaiAirProcessor {
         ZonedDateTime zonedDateTime = cgShanghaiAir.getTime().minusHours(30);
         Iterable<AirData> airDataIterable = airDataService.getLatestData(ZoneNames.ASIA_SHANGHAI, zonedDateTime, 26);
         ZonedDateTime startTime = cgShanghaiAir.getTime();
+        int healthyCount = 0;
         for (AirData airData : airDataIterable) {
             if (null == airData.getDescription()) {
                 break;
             }
-            if (!airData.getDescription().isUnhealthy()) {
-                break;
+            if (!AqiUtils.isUnhealthy(airData.getDescription())) {
+                healthyCount += 1;
+                if (healthyCount >= 2) {
+                    break;
+                }
             }
             startTime = airData.getMessageTime();
         }
-        Duration duration = Duration.between(cgShanghaiAir.getTime(), startTime);
+        log.trace("startTime:{}, endTime:{}", startTime, cgShanghaiAir.getTime());
+        Duration duration = Duration.between(startTime, cgShanghaiAir.getTime());
         long hours = duration.toHours();
         long minutes = duration.minusHours(hours).toMinutes();
-        if (minutes > 0) {
+        if (minutes > 30) {
             hours += 1;
         }
+        log.trace("hours:{}", hours);
         return hours;
     }
-
 
 }

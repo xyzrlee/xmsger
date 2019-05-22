@@ -19,7 +19,6 @@
 
 package app.illl.xmsger.struct;
 
-import app.illl.xmsger.utility.AqiUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -40,8 +39,4 @@ public class AirDescription implements Serializable {
     @JsonProperty("AQI")
     private Integer aqi;
     private String comment;
-
-    public boolean isUnhealthy() {
-        return AqiUtils.isUnhealthy(this.aqi);
-    }
 }

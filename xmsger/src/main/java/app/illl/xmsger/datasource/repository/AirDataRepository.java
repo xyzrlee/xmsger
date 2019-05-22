@@ -30,6 +30,6 @@ import java.time.ZonedDateTime;
 
 @Repository
 public interface AirDataRepository extends CrudRepository<AirData, Integer> {
-    @Query("select e from #{#entityName} e where e.city = ?1 and e.message_time >= ?2")
+    @Query("select e from #{#entityName} e where e.city = ?1 and e.messageTime >= ?2 order by messageTime desc")
     Page<AirData> getLatestData(String city, ZonedDateTime zonedDateTime, Pageable pageable);
 }
