@@ -2,6 +2,7 @@ package app.illl.xmsger.utility;
 
 import app.illl.xmsger.struct.AirDescription;
 
+@SuppressWarnings("WeakerAccess")
 public class AqiUtils {
 
     private AqiUtils() {
@@ -15,6 +16,10 @@ public class AqiUtils {
     public static Boolean isUnhealthy(AirDescription airDescription) {
         if (null == airDescription) return false;
         return isUnhealthy(airDescription.getAqi());
+    }
+
+    public static Boolean isHealthy(AirDescription airDescription) {
+        return !isUnhealthy(airDescription);
     }
 
 }
