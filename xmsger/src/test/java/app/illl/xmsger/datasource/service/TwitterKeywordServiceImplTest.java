@@ -1,6 +1,7 @@
 package app.illl.xmsger.datasource.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,5 +22,6 @@ public class TwitterKeywordServiceImplTest {
     public void getKeywordByUsername() {
         List<String> keywords = twitterKeywordService.getKeywordByUsername("realDonaldTrump");
         log.info("keywords:{}", keywords);
+        Assert.assertFalse(keywords.isEmpty());
     }
 }

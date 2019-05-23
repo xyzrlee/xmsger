@@ -1,6 +1,7 @@
 package app.illl.xmsger.datasource.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,5 +22,6 @@ public class TelegramRegisteredChatServiceImplTest {
     public void getAllChatId() {
         List<Integer> ids = telegramRegisteredChatService.getAllChatId();
         log.info("ids:{}", ids);
+        Assert.assertFalse(ids.isEmpty());
     }
 }

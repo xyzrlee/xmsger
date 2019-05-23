@@ -2,6 +2,7 @@ package app.illl.xmsger.datasource.service;
 
 import app.illl.xmsger.datasource.entity.Token;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,5 +21,6 @@ public class TokenServiceImplTest {
     public void findAll() {
         Iterable<Token> tokens = tokenService.findAll();
         log.info("tokens:{}", tokens);
+        Assert.assertTrue(tokens.iterator().hasNext());
     }
 }
