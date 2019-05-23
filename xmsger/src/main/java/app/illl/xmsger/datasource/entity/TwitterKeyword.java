@@ -27,7 +27,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "twitter_keyword", indexes = {
-        @Index(columnList = "username,keyword", name = "twitter_keyword_username_keyword")
+        @Index(columnList = "username,keyword", name = "twitter_keyword_username_keyword", unique = true)
 })
 @ToString
 @Getter
