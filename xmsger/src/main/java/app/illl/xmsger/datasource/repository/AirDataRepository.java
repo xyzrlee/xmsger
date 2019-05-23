@@ -20,20 +20,10 @@
 package app.illl.xmsger.datasource.repository;
 
 import app.illl.xmsger.datasource.entity.AirData;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.time.ZonedDateTime;
-
 @Repository
 public interface AirDataRepository extends CrudRepository<AirData, Integer>, JpaSpecificationExecutor<AirData> {
-    @Query("select e from #{#entityName} e where e.city = ?1 and e.messageTime >= ?2")
-    Page<AirData> getLatestData(String city, ZonedDateTime zonedDateTime, Pageable pageable);
-
-    @Query("select e from #{#entityName} e where e.messageTime < ?2")
-    Page<AirData> getDataBeforeTime(String city, ZonedDateTime zonedDateTime, Pageable pageable);
 }

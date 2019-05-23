@@ -4,6 +4,10 @@ import app.illl.xmsger.datasource.entity.TwitterKeyword;
 import app.illl.xmsger.datasource.repository.TwitterKeywordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
@@ -22,11 +26,19 @@ public class TwitterKeywordServiceImpl implements TwitterKeywordService {
             condition = "#username != null"
     )
     public List<String> getKeywordByUsername(String username) {
-        Iterable<TwitterKeyword> twitterKeywords = twitterKeywordRepository.findByUsername(username);
+        Specification<TwitterKeyword> specification =
+                (Specification<TwitterKeyword>) (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("username"), username);
         List<String> result = new LinkedList<>();
-        for (TwitterKeyword twitterKeyword : twitterKeywords) {
-            if (twitterKeyword.isActivated()) {
-                result.add(twitterKeyword.getKeyword());
+        for (int page = 0; ; page++) {
+            Pageable pageable = PageRequest.of(page, 100);
+            Page<TwitterKeyword> twitterKeywords = twitterKeywordRepository.findAll(specification, pageable);
+            if (twitterKeywords.isEmpty()) {
+                break;
+            }
+            for (TwitterKeyword twitterKeyword : twitterKeywords) {
+                if (twitterKeyword.isActivated()) {
+                    result.add(twitterKeyword.getKeyword());
+                }
             }
         }
         return result;

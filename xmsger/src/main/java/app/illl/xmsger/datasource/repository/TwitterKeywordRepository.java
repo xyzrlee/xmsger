@@ -20,12 +20,13 @@
 package app.illl.xmsger.datasource.repository;
 
 import app.illl.xmsger.datasource.entity.TwitterKeyword;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TwitterKeywordRepository extends CrudRepository<TwitterKeyword, Integer> {
+public interface TwitterKeywordRepository extends CrudRepository<TwitterKeyword, Integer>, JpaSpecificationExecutor<TwitterKeyword> {
     @Query("select e from #{#entityName} e where e.username = ?1")
     Iterable<TwitterKeyword> findByUsername(String username);
 }
