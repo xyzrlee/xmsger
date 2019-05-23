@@ -24,6 +24,9 @@ public class AirDataServiceImpl implements AirDataService {
 
     private final AirDataRepository airDataRepository;
 
+    private static final String COLUMN_CITY = "city";
+    private static final String COLUMN_MESSAGE_TIME = "messageTime";
+
     @Override
     @Transactional
     public void saveAirData(String city, ZonedDateTime time, AirDescription airDescription) {
@@ -43,19 +46,20 @@ public class AirDataServiceImpl implements AirDataService {
 
     @Override
     public Iterable<AirData> getLatestData(String city, ZonedDateTime zonedDateTime, Integer size) {
-        Specification<AirData> specification = (Specification<AirData>) (root, query, criteriaBuilder) -> {
-            Predicate predicate1 = criteriaBuilder.equal(root.get("city"), city);
-            Predicate predicate2 = criteriaBuilder.lessThan(root.get("messageTime"), zonedDateTime);
+        Specification<AirData> specification = (root, query, criteriaBuilder) -> {
+            Predicate predicate1 = criteriaBuilder.equal(root.get(COLUMN_CITY), city);
+            Predicate predicate2 = criteriaBuilder.lessThan(root.get(COLUMN_MESSAGE_TIME), zonedDateTime);
             return criteriaBuilder.and(predicate1, predicate2);
         };
-        Sort sort = Sort.by(Sort.Order.desc("messageTime"));
+        Sort sort = Sort.by(Sort.Order.desc(COLUMN_MESSAGE_TIME));
         Pageable pageable = PageRequest.of(0, size, sort);
         return airDataRepository.findAll(specification, pageable);
     }
 
     @Override
     public Page<AirData> getDataBeforeTime(ZonedDateTime zonedDateTime, Integer page, Integer size) {
-        Specification<AirData> specification = (Specification<AirData>) (root, query, criteriaBuilder) -> criteriaBuilder.lessThan(root.get("messageTime"), zonedDateTime);
+        Specification<AirData> specification =
+                (root, query, criteriaBuilder) -> criteriaBuilder.lessThan(root.get(COLUMN_MESSAGE_TIME), zonedDateTime);
         Pageable pageable = PageRequest.of(page, size);
         return airDataRepository.findAll(specification, pageable);
     }
@@ -63,7 +67,6 @@ public class AirDataServiceImpl implements AirDataService {
     public void deleteBeforeTime(ZonedDateTime zonedDateTime, Integer size) {
         while (true) {
             Page<AirData> dataPage = getDataBeforeTime(zonedDateTime, 0, size);
-            log.info("dataPage.totalElements={}", dataPage.getTotalElements());
             if (dataPage.isEmpty()) break;
             airDataRepository.deleteAll(dataPage);
         }

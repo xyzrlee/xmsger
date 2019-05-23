@@ -19,6 +19,8 @@ public class TwitterKeywordServiceImpl implements TwitterKeywordService {
 
     private final TwitterKeywordRepository twitterKeywordRepository;
 
+    private static final String COLUMN_USERNAME = "username";
+
     @Override
     @Cacheable(
             value = "TwitterKeyword",
@@ -27,7 +29,7 @@ public class TwitterKeywordServiceImpl implements TwitterKeywordService {
     )
     public List<String> getKeywordByUsername(String username) {
         Specification<TwitterKeyword> specification =
-                (Specification<TwitterKeyword>) (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("username"), username);
+                (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(COLUMN_USERNAME), username);
         List<String> result = new LinkedList<>();
         for (int page = 0; ; page++) {
             Pageable pageable = PageRequest.of(page, 100);
