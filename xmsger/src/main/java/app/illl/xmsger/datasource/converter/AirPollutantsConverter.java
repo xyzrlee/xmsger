@@ -20,31 +20,32 @@
 package app.illl.xmsger.datasource.converter;
 
 import app.illl.xmsger.exception.InternalServerErrorException;
-import app.illl.xmsger.struct.AirDescription;
+import app.illl.xmsger.struct.AirPollutant;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.persistence.AttributeConverter;
 import java.io.IOException;
+import java.util.List;
 
-public class AirDescriptionConverter implements AttributeConverter<AirDescription, String> {
+public class AirPollutantsConverter implements AttributeConverter<List<AirPollutant>, String> {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
 
     @Override
-    public String convertToDatabaseColumn(AirDescription attribute) {
+    public String convertToDatabaseColumn(List<AirPollutant> airPollutants) {
         try {
-            return OBJECT_MAPPER.writeValueAsString(attribute);
+            return OBJECT_MAPPER.writeValueAsString(airPollutants);
         } catch (JsonProcessingException e) {
             throw new InternalServerErrorException(e);
         }
     }
 
     @Override
-    public AirDescription convertToEntityAttribute(String dbData) {
+    public List<AirPollutant> convertToEntityAttribute(String dbData) {
         try {
-            return OBJECT_MAPPER.readValue(dbData, AirDescription.class);
+            return OBJECT_MAPPER.readValue(dbData, OBJECT_MAPPER.getTypeFactory().constructCollectionType(List.class, AirPollutant.class));
         } catch (IOException e) {
             throw new InternalServerErrorException(e);
         }

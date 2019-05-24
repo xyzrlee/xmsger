@@ -2,7 +2,7 @@ package app.illl.xmsger.datasource.service;
 
 import app.illl.xmsger.datasource.entity.AirData;
 import app.illl.xmsger.datasource.repository.AirDataRepository;
-import app.illl.xmsger.struct.AirDescription;
+import app.illl.xmsger.struct.AirPollutant;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.criteria.Predicate;
 import javax.transaction.Transactional;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Component
@@ -29,19 +30,21 @@ public class AirDataServiceImpl implements AirDataService {
 
     @Override
     @Transactional
-    public void saveAirData(String city, ZonedDateTime time, AirDescription airDescription) {
+    public void saveAirData(String city, ZonedDateTime time, Integer aqi, List<AirPollutant> airPollutants, String message) {
         AirData airData = new AirData();
         airData.setMessageTime(time);
         airData.setCity(city);
-        airData.setDescription(airDescription);
+        airData.setAqi(aqi);
+        airData.setPollutants(airPollutants);
+        airData.setMessage(message);
         airDataRepository.save(airData);
     }
 
     @Override
     @Async
     @Transactional
-    public void saveAirDataAsync(String city, ZonedDateTime time, AirDescription airDescription) {
-        this.saveAirData(city, time, airDescription);
+    public void saveAirDataAsync(String city, ZonedDateTime time, Integer aqi, List<AirPollutant> airPollutants, String message) {
+        this.saveAirData(city, time, aqi, airPollutants, message);
     }
 
     @Override

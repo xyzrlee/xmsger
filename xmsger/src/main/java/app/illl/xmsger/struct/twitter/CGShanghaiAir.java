@@ -20,6 +20,7 @@
 package app.illl.xmsger.struct.twitter;
 
 import app.illl.xmsger.constant.ZoneIds;
+import app.illl.xmsger.struct.AirPollutant;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -32,6 +33,8 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 
 @ToString
@@ -58,25 +61,36 @@ public class CGShanghaiAir implements Serializable {
                     .toFormatter(Locale.ENGLISH);
 
     private ZonedDateTime time;
-    private BigDecimal fineParticulateMatter;
+    private String pollutantType;
+    private BigDecimal concentration;
     private Integer aqi;
-    private String comment;
+    private String definition;
 
     public static CGShanghaiAir of(String text) {
         String[] fields = StringUtils.split(text, ';');
         CGShanghaiAir cgShanghaiAir = new CGShanghaiAir();
         cgShanghaiAir.setTime(ZonedDateTime.of(LocalDateTime.parse(fields[0], FORMATTER), ZoneIds.ASIA_SHANGHAI));
-        cgShanghaiAir.setFineParticulateMatter(new BigDecimal(fields[2].trim()));
+        cgShanghaiAir.setPollutantType(fields[1].trim());
+        cgShanghaiAir.setConcentration(new BigDecimal(fields[2].trim()));
         cgShanghaiAir.setAqi(Integer.valueOf(fields[3].trim()));
-        cgShanghaiAir.setComment(fields[4].trim());
+        cgShanghaiAir.setDefinition(fields[4].trim());
         return cgShanghaiAir;
     }
 
     public String toDetailMessage() {
         return String.format(
-                "PM 2.5: %s, AQI: %s, %s",
-                getFineParticulateMatter(), getAqi(), getComment()
+                "%s: %s, AQI: %s, %s",
+                getPollutantType(), getConcentration(), getAqi(), getDefinition()
         );
+    }
+
+    public List<AirPollutant> getAirPollutants() {
+        List<AirPollutant> pollutants = new LinkedList<>();
+        AirPollutant airPollutant = new AirPollutant();
+        airPollutant.setType(this.getPollutantType());
+        airPollutant.setConcentration(this.getConcentration());
+        pollutants.add(airPollutant);
+        return pollutants;
     }
 
 }
