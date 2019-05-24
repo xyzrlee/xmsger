@@ -103,16 +103,13 @@ public class ShanghaiAirProcessorImpl implements ShanghaiAirProcessor {
         ZonedDateTime startTime = cgShanghaiAir.getTime();
         int healthyCount = 0;
         for (AirData airData : airDataIterable) {
-            if (Duration.between(airData.getMessageTime(), startTime).toHours() > 2) {
-                break;
-            }
             if (AqiUtils.isHealthy(airData.getAqi())) {
                 healthyCount += 1;
-                if (healthyCount >= 2) {
-                    break;
-                }
             } else {
                 healthyCount = 0;
+            }
+            if (healthyCount > 2 || Duration.between(airData.getMessageTime(), startTime).toHours() > 2) {
+                break;
             }
             startTime = airData.getMessageTime();
         }

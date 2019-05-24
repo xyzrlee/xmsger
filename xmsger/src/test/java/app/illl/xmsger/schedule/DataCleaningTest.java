@@ -1,5 +1,6 @@
 package app.illl.xmsger.schedule;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,5 +17,6 @@ public class DataCleaningTest {
     @Test
     public void cleanAirData() {
         dataCleaning.cleanAirData();
+        Assert.assertTrue(true);
     }
 }
