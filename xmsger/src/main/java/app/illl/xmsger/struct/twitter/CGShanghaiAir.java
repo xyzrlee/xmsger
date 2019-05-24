@@ -21,6 +21,8 @@ package app.illl.xmsger.struct.twitter;
 
 import app.illl.xmsger.constant.ZoneIds;
 import app.illl.xmsger.struct.AirPollutant;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -40,6 +42,7 @@ import java.util.Locale;
 @ToString
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CGShanghaiAir implements Serializable {
 
     private static final long serialVersionUID = 4590068789519494506L;
@@ -91,6 +94,16 @@ public class CGShanghaiAir implements Serializable {
         airPollutant.setConcentration(this.getConcentration());
         pollutants.add(airPollutant);
         return pollutants;
+    }
+
+    @JsonProperty("time")
+    public String timeToJson() {
+        return time.toString();
+    }
+
+    @JsonProperty("time")
+    public void timeFromJson(String str) {
+        this.time = ZonedDateTime.parse(str);
     }
 
 }
