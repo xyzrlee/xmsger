@@ -26,10 +26,10 @@ import app.illl.xmsger.constant.ZoneNames;
 import app.illl.xmsger.datasource.entity.AirData;
 import app.illl.xmsger.datasource.service.AirDataService;
 import app.illl.xmsger.service.telegram.SendMessageService;
-import app.illl.xmsger.struct.AirDescription;
 import app.illl.xmsger.struct.twitter.CGShanghaiAir;
 import app.illl.xmsger.struct.twitter.IftttTweet;
 import app.illl.xmsger.utility.AqiUtils;
+import app.illl.xmsger.utility.JsonUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -37,7 +37,7 @@ import org.springframework.scheduling.annotation.Async;
 import java.time.Duration;
 import java.time.ZonedDateTime;
 
-@TweetProcessor(TweetProcessorId.C_G_SHANGHAI_AIR)
+@TweetProcessor(TweetProcessorId.CON_GEN_SHANGHAI_AIR)
 @Slf4j
 @RequiredArgsConstructor
 public class ShanghaiAirProcessorImpl implements ShanghaiAirProcessor {
@@ -55,11 +55,13 @@ public class ShanghaiAirProcessorImpl implements ShanghaiAirProcessor {
 
     @Async
     private void saveAirData(CGShanghaiAir cgShanghaiAir) {
-        AirDescription airDescription = new AirDescription();
-        airDescription.setFineParticulateMatter(cgShanghaiAir.getFineParticulateMatter());
-        airDescription.setAqi(cgShanghaiAir.getAqi());
-        airDescription.setComment(cgShanghaiAir.getComment());
-        airDataService.saveAirDataAsync(ZoneNames.ASIA_SHANGHAI, cgShanghaiAir.getTime(), airDescription);
+        airDataService.saveAirDataAsync(
+                ZoneNames.ASIA_SHANGHAI,
+                cgShanghaiAir.getTime(),
+                cgShanghaiAir.getAqi(),
+                cgShanghaiAir.getAirPollutants(),
+                JsonUtils.toJson(cgShanghaiAir)
+        );
     }
 
     @Async
@@ -69,14 +71,10 @@ public class ShanghaiAirProcessorImpl implements ShanghaiAirProcessor {
             return;
         }
         Boolean disableNotification = isDoNotDisturbTime();
-        StringBuilder stringBuilder = new StringBuilder("shanghai air pollution notice");
-        Long durationHours = getDurationHours(cgShanghaiAir);
-        if (durationHours > 1) {
-            stringBuilder.append(", lasted for ").append(durationHours).append(" hours");
-        }
-        stringBuilder.append(".");
-        stringBuilder.append('\n').append(cgShanghaiAir.toDetailMessage());
-        String message = stringBuilder.toString();
+        String message = "shanghai air pollution notice"
+                + this.getDurationMessage(cgShanghaiAir)
+                + "." + '\n'
+                + cgShanghaiAir.toDetailMessage();
         log.debug("warnMessage:{}", message);
         log.debug("sending to {} ids", telegramRegisteredChatCache.getChatIds().size());
         for (Integer chatId : telegramRegisteredChatCache.getChatIds()) {
@@ -89,13 +87,24 @@ public class ShanghaiAirProcessorImpl implements ShanghaiAirProcessor {
         return dateTime.getHour() < 10 || dateTime.getHour() > 20;
     }
 
+    private String getDurationMessage(CGShanghaiAir cgShanghaiAir) {
+        long hours = this.getDurationHours(cgShanghaiAir);
+        if (hours > 0) {
+            if (hours <= 24) {
+                return ", lasted for " + hours + " hours";
+            }
+            return ", lasted for more than 24 hours";
+        }
+        return "";
+    }
+
     private Long getDurationHours(CGShanghaiAir cgShanghaiAir) {
         ZonedDateTime zonedDateTime = cgShanghaiAir.getTime().minusHours(30);
         Iterable<AirData> airDataIterable = airDataService.getLatestData(ZoneNames.ASIA_SHANGHAI, zonedDateTime, 26);
         ZonedDateTime startTime = cgShanghaiAir.getTime();
         int healthyCount = 0;
         for (AirData airData : airDataIterable) {
-            if (AqiUtils.isHealthy(airData.getDescription())) {
+            if (AqiUtils.isHealthy(airData.getAqi())) {
                 healthyCount += 1;
                 if (healthyCount >= 2) {
                     break;

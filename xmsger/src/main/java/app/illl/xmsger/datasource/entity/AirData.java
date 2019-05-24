@@ -19,13 +19,14 @@
 
 package app.illl.xmsger.datasource.entity;
 
-import app.illl.xmsger.datasource.converter.AirDescriptionConverter;
-import app.illl.xmsger.struct.AirDescription;
+import app.illl.xmsger.datasource.converter.AirPollutantsConverter;
+import app.illl.xmsger.struct.AirPollutant;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "air_data", indexes = {
@@ -49,7 +50,12 @@ public class AirData implements Serializable {
     @Column(name = "message_time")
     private ZonedDateTime messageTime;
 
-    @Convert(converter = AirDescriptionConverter.class)
-    private AirDescription description;
+    private Integer aqi;
+
+    @Convert(converter = AirPollutantsConverter.class)
+    private List<AirPollutant> pollutants;
+
+
+    private String message;
 
 }

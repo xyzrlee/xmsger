@@ -24,7 +24,7 @@ public class TweetProcessorId {
     private TweetProcessorId() {
     }
 
-    public static final String C_G_SHANGHAI_AIR = "CGShanghaiAir";
+    public static final String CON_GEN_SHANGHAI_AIR = "CGShanghaiAir";
 
     public static final String DEFAULT_ANALYSE = "__DEFAULT_ANALYSE__";
 
