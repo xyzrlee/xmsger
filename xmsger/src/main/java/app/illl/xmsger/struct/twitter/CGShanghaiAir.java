@@ -50,7 +50,7 @@ public class CGShanghaiAir implements Serializable {
     private CGShanghaiAir() {
     }
 
-    private static final DateTimeFormatter FORMATTER =
+    public static final DateTimeFormatter FORMATTER =
             new DateTimeFormatterBuilder()
                     .appendValue(ChronoField.MONTH_OF_YEAR, 2)
                     .appendLiteral('-')

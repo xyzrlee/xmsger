@@ -13,7 +13,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.criteria.Predicate;
 import javax.transaction.Transactional;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -48,12 +47,9 @@ public class AirDataServiceImpl implements AirDataService {
     }
 
     @Override
-    public Iterable<AirData> getLatestData(String city, ZonedDateTime zonedDateTime, Integer size) {
-        Specification<AirData> specification = (root, query, criteriaBuilder) -> {
-            Predicate predicate1 = criteriaBuilder.equal(root.get(COLUMN_CITY), city);
-            Predicate predicate2 = criteriaBuilder.lessThan(root.get(COLUMN_MESSAGE_TIME), zonedDateTime);
-            return criteriaBuilder.and(predicate1, predicate2);
-        };
+    public Iterable<AirData> getLatestData(String city, Integer size) {
+        Specification<AirData> specification =
+                (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(COLUMN_CITY), city);
         Sort sort = Sort.by(Sort.Order.desc(COLUMN_MESSAGE_TIME));
         Pageable pageable = PageRequest.of(0, size, sort);
         return airDataRepository.findAll(specification, pageable);

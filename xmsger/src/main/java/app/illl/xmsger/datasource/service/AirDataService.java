@@ -13,7 +13,7 @@ public interface AirDataService {
 
     void saveAirDataAsync(String city, ZonedDateTime time, Integer aqi, List<AirPollutant> airPollutants, String message);
 
-    Iterable<AirData> getLatestData(String city, ZonedDateTime zonedDateTime, Integer count);
+    Iterable<AirData> getLatestData(String city, Integer count);
 
     Page<AirData> getDataBeforeTime(ZonedDateTime zonedDateTime, Integer page, Integer size);
 
