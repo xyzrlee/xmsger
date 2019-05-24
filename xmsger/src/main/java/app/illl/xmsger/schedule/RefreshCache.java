@@ -16,7 +16,7 @@ public class RefreshCache {
 
     @Scheduled(cron = "0 */10 * * * *")
     @Synchronized
-    private void defaultRefresh() {
+    void defaultRefresh() {
         this.tokenCache.refresh();
         this.telegramRegisteredChatCache.refresh();
     }

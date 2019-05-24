@@ -99,18 +99,17 @@ public class ShanghaiAirProcessorImpl implements ShanghaiAirProcessor {
     }
 
     private Long getDurationHours(CGShanghaiAir cgShanghaiAir) {
-        ZonedDateTime zonedDateTime = cgShanghaiAir.getTime().minusHours(30);
-        Iterable<AirData> airDataIterable = airDataService.getLatestData(ZoneNames.ASIA_SHANGHAI, zonedDateTime, 26);
+        Iterable<AirData> airDataIterable = airDataService.getLatestData(ZoneNames.ASIA_SHANGHAI, 26);
         ZonedDateTime startTime = cgShanghaiAir.getTime();
         int healthyCount = 0;
         for (AirData airData : airDataIterable) {
             if (AqiUtils.isHealthy(airData.getAqi())) {
                 healthyCount += 1;
-                if (healthyCount >= 2) {
-                    break;
-                }
             } else {
                 healthyCount = 0;
+            }
+            if (healthyCount > 2 || Duration.between(airData.getMessageTime(), startTime).toHours() > 2) {
+                break;
             }
             startTime = airData.getMessageTime();
         }

@@ -39,7 +39,7 @@ public class SendMessageAop {
     public void doAround(final ProceedingJoinPoint proceedingJoinPoint
             , Integer chatId, String text
     ) throws Throwable {
-        if (NumberUtils.compare(chatId, 1) == 0) {
+        if (NumberUtils.compare(chatId, 10) <= 0) {
             Signature signature = proceedingJoinPoint.getSignature();
             log.info("{} skipped using Aspect, text: {}", signature.getName(), text);
         } else {
