@@ -19,6 +19,7 @@
 
 package app.illl.xmsger.struct.twitter;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import lombok.Getter;
@@ -38,6 +39,7 @@ import java.util.Locale;
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class IftttTweet {
 
     private static final DateTimeFormatter FORMATTER =

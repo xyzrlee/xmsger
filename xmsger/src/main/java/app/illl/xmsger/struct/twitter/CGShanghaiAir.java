@@ -21,6 +21,7 @@ package app.illl.xmsger.struct.twitter;
 
 import app.illl.xmsger.constant.ZoneIds;
 import app.illl.xmsger.struct.AirPollutant;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -43,6 +44,7 @@ import java.util.Locale;
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CGShanghaiAir implements Serializable {
 
     private static final long serialVersionUID = 4590068789519494506L;
