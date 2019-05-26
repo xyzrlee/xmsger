@@ -107,11 +107,11 @@ public class ShanghaiAirProcessorImpl implements ShanghaiAirProcessor {
                 healthyCount += 1;
             } else {
                 healthyCount = 0;
+                startTime = airData.getMessageTime();
             }
             if (healthyCount > 2 || Duration.between(airData.getMessageTime(), startTime).toHours() > 2) {
                 break;
             }
-            startTime = airData.getMessageTime();
         }
         log.trace("startTime:{}, endTime:{}", startTime, cgShanghaiAir.getTime());
         Duration duration = Duration.between(startTime, cgShanghaiAir.getTime());
