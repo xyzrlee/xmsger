@@ -20,7 +20,6 @@
 package app.illl.xmsger.service.twitter;
 
 import app.illl.xmsger.cache.TelegramRegisteredChatCache;
-import app.illl.xmsger.constant.TweetProcessorId;
 import app.illl.xmsger.datasource.service.TwitterKeywordService;
 import app.illl.xmsger.service.telegram.SendMessageService;
 import app.illl.xmsger.struct.twitter.IftttTweet;
@@ -28,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
-@TweetProcessor(TweetProcessorId.DEFAULT_ANALYSE)
+@DefaultTweetProcessor
 @Slf4j
 @RequiredArgsConstructor
 public class DefaultAnalyseProcessorImpl implements DefaultAnalyseProcessor {
