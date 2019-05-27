@@ -15,7 +15,7 @@ import java.time.ZonedDateTime;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class RestartNotice implements ApplicationListener<ContextRefreshedEvent> {
+public class ContextRefreshedNotice implements ApplicationListener<ContextRefreshedEvent> {
 
     private final SendMessageService sendMessageService;
     private final TokenCache tokenCache;
