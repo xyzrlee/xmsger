@@ -62,7 +62,6 @@ public class SendMessageServiceImpl implements SendMessageService {
                 }
             }
         } catch (IOException e) {
-            log.error("", e);
             throw new BadRequestException(e);
         }
     }
