@@ -19,11 +19,11 @@
 
 package app.illl.xmsger.datasource.repository;
 
-import app.illl.xmsger.datasource.entity.TwitterKeyword;
+import app.illl.xmsger.datasource.entity.NoticeMonthly;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TwitterKeywordRepository extends CrudRepository<TwitterKeyword, Integer>, JpaSpecificationExecutor<TwitterKeyword> {
+public interface NoticeMonthlyRepository extends CrudRepository<NoticeMonthly, Integer>, JpaSpecificationExecutor<NoticeMonthly> {
 }
