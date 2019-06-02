@@ -44,7 +44,7 @@ public class IftttTweet {
 
     private static final DateTimeFormatter FORMATTER =
             new DateTimeFormatterBuilder()
-                    .appendText(ChronoField.MONTH_OF_YEAR, TextStyle.SHORT)
+                    .appendText(ChronoField.MONTH_OF_YEAR)
                     .appendLiteral(' ')
                     .appendValue(ChronoField.DAY_OF_MONTH)
                     .appendLiteral(", ")
