@@ -25,7 +25,7 @@ class NoticeMonthlyScheduler {
     private final TelegramRegisteredChatService telegramRegisteredChatService;
     private final SendMessageService sendMessageService;
 
-    @Scheduled(cron = "0 8 * * * *")
+    @Scheduled(cron = "0 0 8 * * *")
     void notice() {
         Integer day = ZonedDateTime.now(ZoneId.systemDefault()).getDayOfMonth();
         List<Integer> chatIds = telegramRegisteredChatService.getAllChatId();
