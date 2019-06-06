@@ -34,14 +34,14 @@ public class TweetProcessorFinderImpl implements TweetProcessorFinder, Applicati
     @Synchronized
     public void onApplicationEvent(ContextRefreshedEvent event) {
         Map<String, IftttTweetProcessor> newServiceMap = new HashMap<>();
-        IftttTweetProcessor defaultProcessor = null;
+        IftttTweetProcessor newDefaultProcessor = null;
         ApplicationContext applicationContext = event.getApplicationContext();
         Map<String, Object> defaultProcessorBeansMap = applicationContext.getBeansWithAnnotation(DefaultTweetProcessor.class);
         if (defaultProcessorBeansMap.size() > 1) {
             throw new IllegalArgumentException("duplicate @DefaultTweetProcessor class found");
         }
         for (Map.Entry<String, Object> entry : defaultProcessorBeansMap.entrySet()) {
-            defaultProcessor = (IftttTweetProcessor) entry.getValue();
+            newDefaultProcessor = (IftttTweetProcessor) entry.getValue();
         }
         Map<String, Object> beansMap = applicationContext.getBeansWithAnnotation(TweetProcessor.class);
         for (Map.Entry<String, Object> entry : beansMap.entrySet()) {
@@ -57,7 +57,7 @@ public class TweetProcessorFinderImpl implements TweetProcessorFinder, Applicati
             }
         }
         this.tweetProcessorMap = newServiceMap;
-        this.defaultProcessor = defaultProcessor;
+        this.defaultProcessor = newDefaultProcessor;
         log.debug("defaultTweetProcessor:{},serviceMap:{}", this.defaultProcessor, this.tweetProcessorMap.keySet());
     }
 }
