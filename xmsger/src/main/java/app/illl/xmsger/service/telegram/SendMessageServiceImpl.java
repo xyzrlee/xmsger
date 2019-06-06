@@ -38,6 +38,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 
 @SuppressWarnings("unused")
 @Component
@@ -54,7 +55,7 @@ public class SendMessageServiceImpl implements SendMessageService {
             HttpPost request = new HttpPost();
             request.setURI(uri);
             request.setHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.getMimeType());
-            request.setEntity(new StringEntity(JsonUtils.toJson(sendMessageRequest)));
+            request.setEntity(new StringEntity(JsonUtils.toJson(sendMessageRequest), StandardCharsets.UTF_8));
             try (CloseableHttpResponse httpResponse = httpClient.execute(request)) {
                 HttpStatus httpStatus = HttpStatus.valueOf(httpResponse.getStatusLine().getStatusCode());
                 if (!httpStatus.is2xxSuccessful()) {
