@@ -52,7 +52,6 @@ public class SendMessageServiceImpl implements SendMessageService {
         try (CloseableHttpClient httpClient = HttpClientUtils.getDefaultHttpClient()) {
             HttpPost request = new HttpPost();
             request.setURI(uri);
-//            request.setHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.getMimeType());
             request.setEntity(new StringEntity(JsonUtils.toJson(sendMessageRequest), ContentType.APPLICATION_JSON));
             try (CloseableHttpResponse httpResponse = httpClient.execute(request)) {
                 HttpStatus httpStatus = HttpStatus.valueOf(httpResponse.getStatusLine().getStatusCode());

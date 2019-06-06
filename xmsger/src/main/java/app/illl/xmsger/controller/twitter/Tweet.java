@@ -30,21 +30,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
-
 @RestController
 @RequestMapping(Twitter.PATH_TWEET)
 @Slf4j
 @RequiredArgsConstructor
 public class Tweet {
 
-    private Map<String, IftttTweetProcessor> serviceMap;
+    private final TweetProcessorFinder tweetProcessorFinder;
 
     @PostMapping
     public void post(@RequestBody IftttTweet iftttTweet) {
-        IftttTweetProcessor processor = TweetProcessorFinder.getProcessor(iftttTweet.getUsername());
+        IftttTweetProcessor processor = tweetProcessorFinder.getProcessor(iftttTweet.getUsername());
         if (null == processor) {
-            processor = TweetProcessorFinder.getDefaultProcessor();
+            processor = tweetProcessorFinder.getDefaultProcessor();
         }
         if (null == processor) {
             log.warn("no processor, username:{}", iftttTweet.getUsername());
