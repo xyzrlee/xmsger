@@ -27,7 +27,6 @@ import app.illl.xmsger.utility.HttpClientUtils;
 import app.illl.xmsger.utility.JsonUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
@@ -53,8 +52,8 @@ public class SendMessageServiceImpl implements SendMessageService {
         try (CloseableHttpClient httpClient = HttpClientUtils.getDefaultHttpClient()) {
             HttpPost request = new HttpPost();
             request.setURI(uri);
-            request.setHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.getMimeType());
-            request.setEntity(new StringEntity(JsonUtils.toJson(sendMessageRequest)));
+//            request.setHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.getMimeType());
+            request.setEntity(new StringEntity(JsonUtils.toJson(sendMessageRequest), ContentType.APPLICATION_JSON));
             try (CloseableHttpResponse httpResponse = httpClient.execute(request)) {
                 HttpStatus httpStatus = HttpStatus.valueOf(httpResponse.getStatusLine().getStatusCode());
                 if (!httpStatus.is2xxSuccessful()) {
