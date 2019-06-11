@@ -22,8 +22,8 @@ package app.illl.xmsger.service.telegram;
 import app.illl.xmsger.constant.Telegram;
 import app.illl.xmsger.exception.BadRequestException;
 import app.illl.xmsger.exception.InternalServerErrorException;
+import app.illl.xmsger.service.HttpClientInitializerImpl;
 import app.illl.xmsger.struct.telegram.request.SendMessageRequest;
-import app.illl.xmsger.utility.HttpClientUtils;
 import app.illl.xmsger.utility.JsonUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,11 +45,12 @@ import java.net.URI;
 public class SendMessageServiceImpl implements SendMessageService {
 
     private final GetUrlService getUrlService;
+    private final HttpClientInitializerImpl httpClientInitializer;
 
     @Override
     public void sendMessage(SendMessageRequest sendMessageRequest) {
         URI uri = URI.create(getUrlService.getUrl(Telegram.METHOD_SEND_MESSAGE));
-        try (CloseableHttpClient httpClient = HttpClientUtils.getDefaultHttpClient()) {
+        try (CloseableHttpClient httpClient = httpClientInitializer.getDefaultHttpClient()) {
             HttpPost request = new HttpPost();
             request.setURI(uri);
             request.setEntity(new StringEntity(JsonUtils.toJson(sendMessageRequest), ContentType.APPLICATION_JSON));
