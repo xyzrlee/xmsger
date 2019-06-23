@@ -40,7 +40,7 @@ public class TwitterKeyword implements Serializable {
     private static final long serialVersionUID = 1339031298792407540L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     private Integer id;
 
