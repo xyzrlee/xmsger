@@ -16,7 +16,7 @@ import javax.persistence.*;
 @EqualsAndHashCode
 public class NoticeMonthly {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     private Integer id;
     @Column(name = "chat_id")
