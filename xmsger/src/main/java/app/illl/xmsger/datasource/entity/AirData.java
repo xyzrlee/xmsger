@@ -41,7 +41,7 @@ public class AirData implements Serializable {
     private static final long serialVersionUID = -1212684681390328438L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter(AccessLevel.NONE)
     private Integer id;
 
