@@ -19,17 +19,17 @@ RUN set -ex \
  && cd /repo \
  && chmod +x mvnw \
  && ./mvnw clean package ${MVNWARGS}\
- && mkdir -p /xmsger \
- && cp target/xmsger.jar /xmsger/ \
+ && mkdir -p /xmsger-boot \
+ && cp target/xmsger.jar /xmsger-boot/ \
  && rm -rf /repo \
  && rm -rf ${HOME}/.m2 \
- && ls -l /xmsger
+ && ls -l /xmsger-boot
 
 ENV PATH=${PATH}:/usr/lib/jvm/java-1.8-openjdk/bin
 
-COPY entrypoint.sh /xmsger/entrypoint.sh
+COPY entrypoint.sh /xmsger-boot/entrypoint.sh
 
 ENV RUNAS=root
 ENV JVMARGS=
 
-ENTRYPOINT /xmsger/entrypoint.sh
+ENTRYPOINT /xmsger-boot/entrypoint.sh
