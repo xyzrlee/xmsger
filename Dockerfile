@@ -19,7 +19,7 @@ RUN set -ex \
  && cd /repo \
  && chmod +x mvnw \
  && ./mvnw clean package ${MVNWARGS}\
- && mkdir -p /xmsger-boot \
+ && mkdir -p /xmsger-boot /xmsger \
  && cp target/xmsger.jar /xmsger-boot/ \
  && rm -rf /repo \
  && rm -rf ${HOME}/.m2 \

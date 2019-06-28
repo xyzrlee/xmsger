@@ -1,5 +1,5 @@
 #!/bin/sh
 
-cd /xmsger-boot
+cd /xmsger
 ls -lh
-sudo -u ${RUNAS} java ${JVMARGS} -jar xmsger.jar
+sudo -u ${RUNAS} java ${JVMARGS} -jar /xmsger-boot/xmsger.jar
