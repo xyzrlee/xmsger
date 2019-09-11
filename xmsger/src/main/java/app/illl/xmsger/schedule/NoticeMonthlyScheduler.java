@@ -11,6 +11,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.LinkedList;
@@ -36,6 +37,15 @@ class NoticeMonthlyScheduler {
     }
 
     private void notice(Integer chatId, Integer dayOfMonth) {
+        LocalDate date2 = LocalDate.now();
+        LocalDate date1 = date2.minusDays(3);
+        LocalDate date3 = LocalDate.now().withDayOfMonth(dayOfMonth);
+        if (date3.isBefore(date2)) {
+            date3 = date3.plusMonths(1);
+        }
+        if (date3.isBefore(date1) || date3.isAfter(date2)) {
+            return;
+        }
         List<String> noticeMessageList = new LinkedList<>();
         List<NoticeMonthly> notices = noticeMonthlyService.getByChatId(chatId);
         for (NoticeMonthly notice : notices) {
