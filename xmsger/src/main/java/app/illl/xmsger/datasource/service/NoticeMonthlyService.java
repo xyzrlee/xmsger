@@ -7,5 +7,5 @@ import java.util.List;
 public interface NoticeMonthlyService {
     void save(NoticeMonthly noticeMonthly);
 
-    List<NoticeMonthly> getByChatId(Integer chatId);
+    List<NoticeMonthly> getByChatIdAndDay(Integer chatId, List<Integer> days);
 }

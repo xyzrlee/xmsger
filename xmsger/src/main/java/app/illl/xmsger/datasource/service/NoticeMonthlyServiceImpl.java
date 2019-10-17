@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.criteria.Predicate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -13,6 +15,7 @@ import java.util.List;
 public class NoticeMonthlyServiceImpl implements NoticeMonthlyService {
 
     private static final String COLUMN_CHAT_ID = "chatId";
+    private static final String COLUMN_DAY_OF_MONTH = "dayOfMonth";
     private final NoticeMonthlyRepository noticeMonthlyRepository;
 
     @Override
@@ -21,9 +24,14 @@ public class NoticeMonthlyServiceImpl implements NoticeMonthlyService {
     }
 
     @Override
-    public List<NoticeMonthly> getByChatId(Integer chatId) {
+    public List<NoticeMonthly> getByChatIdAndDay(Integer chatId, List<Integer> days) {
         Specification<NoticeMonthly> specification =
-                (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(COLUMN_CHAT_ID), chatId);
+                (root, query, criteriaBuilder) -> {
+                    List<Predicate> predicates = new ArrayList<>();
+                    predicates.add(criteriaBuilder.equal(root.get(COLUMN_CHAT_ID), chatId));
+                    predicates.add(root.get(COLUMN_DAY_OF_MONTH).in(days));
+                    return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+                };
         return noticeMonthlyRepository.findAll(specification);
     }
 }
