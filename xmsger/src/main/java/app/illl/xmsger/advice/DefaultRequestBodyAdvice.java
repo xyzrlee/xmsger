@@ -37,7 +37,7 @@ import java.nio.charset.StandardCharsets;
 public class DefaultRequestBodyAdvice implements RequestBodyAdvice {
     @Override
     public boolean supports(MethodParameter methodParameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {
-        return true;
+        return log.isTraceEnabled();
     }
 
     @Override

@@ -7,13 +7,11 @@ import app.illl.xmsger.service.telegram.SendMessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,40 +20,47 @@ import java.util.List;
 @Slf4j
 class NoticeMonthlyScheduler {
 
+    private static final int NOTICE_DAYS = 3;
+
     private final NoticeMonthlyService noticeMonthlyService;
     private final TelegramRegisteredChatService telegramRegisteredChatService;
     private final SendMessageService sendMessageService;
 
     @Scheduled(cron = "0 0 8 * * *")
     void notice() {
-        Integer day = ZonedDateTime.now(ZoneId.systemDefault()).getDayOfMonth();
         List<Integer> chatIds = telegramRegisteredChatService.getAllChatId();
         if (null == chatIds) return;
         for (Integer chatId : chatIds) {
-            notice(chatId, day);
+            notice(chatId, NOTICE_DAYS);
         }
     }
 
-    private void notice(Integer chatId, Integer dayOfMonth) {
-        LocalDate date2 = LocalDate.now();
-        LocalDate date1 = date2.minusDays(3);
-        LocalDate date3 = LocalDate.now().withDayOfMonth(dayOfMonth);
-        if (date3.isBefore(date2)) {
-            date3 = date3.plusMonths(1);
-        }
-        if (date3.isBefore(date1) || date3.isAfter(date2)) {
-            return;
-        }
-        List<String> noticeMessageList = new LinkedList<>();
-        List<NoticeMonthly> notices = noticeMonthlyService.getByChatId(chatId);
-        for (NoticeMonthly notice : notices) {
-            if (NumberUtils.compare(dayOfMonth, notice.getDayOfMonth()) == 0 && notice.getMessage() != null) {
-                noticeMessageList.add(notice.getMessage());
+    private void notice(Integer chatId, @SuppressWarnings("SameParameterValue") int daysInAdvance) {
+        LocalDate date = LocalDate.now();
+        String dateMsg = "today";
+        for (int i = 0; i < daysInAdvance; i++) {
+            List<Integer> days = new ArrayList<>(4);
+            days.add(date.getDayOfMonth());
+            if (date.getDayOfMonth() == date.lengthOfMonth()) {
+                for (int x = date.getDayOfMonth() + 1; x <= 31; x++) {
+                    days.add(x);
+                }
             }
-        }
-        if (!noticeMessageList.isEmpty()) {
-            String message = StringUtils.join(noticeMessageList, ", ");
-            sendMessageService.sendPlainText(chatId, message);
+            List<NoticeMonthly> notices = noticeMonthlyService.getByChatIdAndDay(chatId, days);
+            List<String> noticeMessageList = new LinkedList<>();
+            for (NoticeMonthly notice : notices) {
+                if (notice.getMessage() != null) {
+                    noticeMessageList.add(notice.getMessage());
+                }
+            }
+            if (i > 0) {
+                dateMsg = "+" + i + "d";
+            }
+            if (!noticeMessageList.isEmpty()) {
+                String message = "[" + dateMsg + "] " + StringUtils.join(noticeMessageList, ", ");
+                sendMessageService.sendPlainText(chatId, message);
+            }
+            date = date.plusDays(1);
         }
     }
 

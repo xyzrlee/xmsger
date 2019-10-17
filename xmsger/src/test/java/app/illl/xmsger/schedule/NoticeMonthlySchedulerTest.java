@@ -12,8 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -30,23 +29,19 @@ public class NoticeMonthlySchedulerTest {
     @Synchronized
     public void beforeClass() {
         if (initialized) return;
-        Integer day = ZonedDateTime.now(ZoneId.systemDefault()).getDayOfMonth();
-        Integer nextDay = ZonedDateTime.now(ZoneId.systemDefault()).plusDays(1).getDayOfMonth();
-        NoticeMonthly noticeMonthly = new NoticeMonthly();
-        noticeMonthly.setChatId(1);
-        noticeMonthly.setDayOfMonth(day);
-        noticeMonthly.setMessage("test01");
-        noticeMonthlyService.save(noticeMonthly);
-        noticeMonthly = new NoticeMonthly();
-        noticeMonthly.setChatId(1);
-        noticeMonthly.setDayOfMonth(day);
-        noticeMonthly.setMessage("test02");
-        noticeMonthlyService.save(noticeMonthly);
-        noticeMonthly = new NoticeMonthly();
-        noticeMonthly.setChatId(1);
-        noticeMonthly.setDayOfMonth(nextDay);
-        noticeMonthly.setMessage("test03");
-        noticeMonthlyService.save(noticeMonthly);
+        LocalDate now = LocalDate.now();
+        LocalDate time = LocalDate.now().minusDays(4);
+        LocalDate end = LocalDate.now().plusDays(5);
+        while (time.isBefore(end)) {
+            for (int i = 0; i < 2; i++) {
+                NoticeMonthly noticeMonthly = new NoticeMonthly();
+                noticeMonthly.setChatId(1);
+                noticeMonthly.setDayOfMonth(time.getDayOfMonth());
+                noticeMonthly.setMessage("text " + time.getDayOfMonth() + " " + i);
+                noticeMonthlyService.save(noticeMonthly);
+            }
+            time = time.plusDays(1);
+        }
         initialized = true;
     }
 
