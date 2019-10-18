@@ -1,1 +1,2 @@
 # XMsger
+[![Build Status](https://travis-ci.com/xyzrlee/api.svg?branch=master)](https://travis-ci.com/xyzrlee/api) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=app.illl%3Axmsger&metric=alert_status)](https://sonarcloud.io/dashboard?id=app.illl%3Axmsger)
