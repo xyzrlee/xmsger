@@ -148,21 +148,15 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>central</id>
-            <name>Central Repository</name>
-            <url>https://repo.maven.apache.org/maven2</url>
+        <repository>
+            <id>spring-lib</id>
+            <name>Spring Lib Release Repository</name>
             <layout>default</layout>
+            <url>https://repo.spring.io/libs-release</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
-            <releases>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-        </pluginRepository>
-    </pluginRepositories>
+        </repository>
+    </repositories>
 
 </project>
