@@ -1,24 +1,24 @@
 dist: bionic
-
 language: java
-
 jdk:
 - openjdk11
-
 addons:
   sonarcloud:
-    organization: "xyzrlee-github"
+    organization: xyzrlee-github
     token:
       secure: "$SONAR_TOKEN"
-
 script:
 - rm -f ${HOME}/.m2/settings.xml
 - cd xmsger
 - chmod +x mvnw
-- ./mvnw clean install -Dmaven.test.skip=true -Dmaven.javadoc.skip=true --batch-mode --show-version
-- ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent org.jacoco:jacoco-maven-plugin:report package sonar:sonar -e -X
-
+- "./mvnw clean install -Dmaven.test.skip=true -Dmaven.javadoc.skip=true --batch-mode
+  --show-version"
+- "./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent org.jacoco:jacoco-maven-plugin:report
+  package sonar:sonar -e -X"
 cache:
   directories:
-  - '$HOME/.m2/repository'
-  - '$HOME/.sonar/cache'
+  - "$HOME/.m2/repository"
+  - "$HOME/.sonar/cache"
+env:
+  global:
+    secure: vnhh/Penbw0bEJVgJoyymnwRVwa76tDtqgtYUniID0RYwGzyraKEh6OBR+zUyZXwcsev+EmImOZgzRhHdfznsQ3yF1GHv41T+Ygz300qriX1cctiT8DS+/zYDZM7Biw2sxQ3nHfwypjvLVtbvLZZxIS4qW5B2Veqcq0Bgj1JwIhYaUGHgRFKZC7ijIa2IPNvj/qoaAH3kG6fJNuf2yIRCzoRDdroHQVd+bP7w2jgbvKkOCca9oEQGAAjkSkwqEUp7fi0ohPAKy7V3vWXS0H+oO6njLfYzecg2Mj73SjeBbkQ3bHJPvjl1JtHEIAB9U0mkaF+87c2TuwGyfdnodGXcMetIYX+rIwIH3WsCisx8C2nvkH/f4t5o5NKfuq5o+yoJ+Isf2T1/T+6mwisiT5e3YvrmwUU089GG0GULlDqmxRWUAZkdBwidlv16DoRTfF2lYwE4cPcwikVZqvl3vA/iDrBqsOAN+HmYHReTLXethxHQEPEzQtOHnovwxadfQ0lgN3IDZqgRKniOGitlLc/nrIf6QFukJ44w2xkGuD9HOrpNn/QhbV7IOIHIj2jkAJLdJXvHwYT8urhXuB1jl2zEKej0QXd7xXG6NQtk3STaA/5DzKJoXNa2wyxTHDi3z1ZoJe1zIhrYAgl89h93KPKVfBR7QJiDy4MHSvOnU25Xdc=
