@@ -13,11 +13,10 @@ addons:
 
 script:
 - rm -f ${HOME}/.m2/settings.xml
-#- wget https://raw.githubusercontent.com/apache/maven/master/apache-maven/src/conf/settings.xml -O ${HOME}/.m2/settings.xml
 - cd xmsger
 - chmod +x mvnw
 - ./mvnw clean install -Dmaven.test.skip=true -Dmaven.javadoc.skip=true --batch-mode --show-version
-- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package org.jacoco:jacoco-maven-plugin:report
+- ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent package org.jacoco:jacoco-maven-plugin:report
 
 cache:
   directories:
