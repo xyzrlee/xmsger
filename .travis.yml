@@ -12,6 +12,7 @@ addons:
       secure: "$SONAR_TOKEN"
 
 script:
+- wget https://raw.githubusercontent.com/apache/maven/master/apache-maven/src/conf/settings.xml -O ${HOME}/.m2/settings.xml
 - cd xmsger
 - chmod +x mvnw
 - ./mvnw clean install -Dmaven.test.skip=true -Dmaven.javadoc.skip=true --batch-mode --show-version --no-transfer-progress
