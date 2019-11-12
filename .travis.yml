@@ -1,27 +1,19 @@
 dist: bionic
 language: java
 jdk:
-  - openjdk11
+- openjdk11
 addons:
   sonarcloud:
     organization: xyzrlee-github
     token:
         secure: "hCw9P4XLOIPJv+apT/5lhZQngVmmMYuGCXbXwDEwRWmhO2cGl+8ND6TaDf5ul8ZF+M/2pEYUk10If4yksLs9oaW6dtoNiQLhi6IdgF43EX/NjCqCIlsHQEM0befHgVjgnJWqqUjQ3afgIDEo3zb/opflwXxAR8Orbc3lhLJ07VCkxScoRwuUwD8HZ3VREVNpDJ27A0Gbqi0kh4kxg2c55n7eH9i0x/Qf1GhcDoVoMu06hb/F5AEpG4qST9/vYKE/vvLUfI2SvwO6rCvwx9IV/DI/KQXB2TsBNxyzBh7V+cxFq2EwoJ29t0tYF12Q/0nvWNkYEA6wF6GiSNFIof054EjKbEVXEg25s8UMDE4puvO+RzqJPTq0zqaV13v4yUS7CguhzuxgyVmmhKmDCyhCuXrBm7q3kKi1Cfxmr4PC9+eJLl9sleuOhFp22k3XfeMF6axibOIVjWdGCoJ7+nv0M2aIKxHliv+JEFwwCaELWgHHGG3ugjE9Wo8v5gdfhoDObDH1EV6vfsgBU34YDauaWzs05oBTbUiJzckwreUl+3Twv/FIQFZzAq4NxBM7AtXRdNle2nSfKkarLAxtrh644fFjQSwh4R79OXzLFPYTPw8Z0YCeHM/YDkvHLmOaqGeMo/uznuFWuLU9L0TmNckw77CNIBcinVvy+aSz0rem+R0="
 script:
-  - rm -f ${HOME}/.m2/settings.xml
-  - cd xmsger
-#  - chmod +x mvnw
-#  - ./mvnw clean install -Dmaven.test.skip=true -Dmaven.javadoc.skip=true --batch-mode --show-version
-#  - ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent org.jacoco:jacoco-maven-plugin:report package sonar:sonar
-  - chmod +x gradlew
-  - ./gradlew build
-  - sonar-scanner
-before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+- rm -f ${HOME}/.m2/settings.xml
+- cd xmsger
+- chmod +x mvnw
+- ./mvnw clean install -Dmaven.test.skip=true -Dmaven.javadoc.skip=true --batch-mode --show-version
+- ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent org.jacoco:jacoco-maven-plugin:report package sonar:sonar
 cache:
   directories:
-    - $HOME/.m2/repository
-    - $HOME/.sonar/cache
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
+  - "$HOME/.m2/repository"
+  - "$HOME/.sonar/cache"
