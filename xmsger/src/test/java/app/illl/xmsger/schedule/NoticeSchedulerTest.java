@@ -17,13 +17,13 @@ import java.time.LocalDate;
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-public class NoticeMonthlySchedulerTest {
+public class NoticeSchedulerTest {
 
     private static boolean initialized = false;
     @Autowired
     private NoticeMonthlyService noticeMonthlyService;
     @Autowired
-    private NoticeMonthlyScheduler noticeMonthlyScheduler;
+    private NoticeScheduler noticeScheduler;
 
     @Before
     @Synchronized
@@ -46,9 +46,15 @@ public class NoticeMonthlySchedulerTest {
     }
 
     @Test
-    public void notice() {
-        noticeMonthlyScheduler.notice();
-        Assert.assertTrue(true);
+    public void morningNotice() {
+        int num = noticeScheduler.morningNotice();
+        Assert.assertEquals(3, num);
+    }
+
+    @Test
+    public void afternoonNotice() {
+        int num = noticeScheduler.afternoonNotice();
+        Assert.assertEquals(1, num);
     }
 
     @Test
