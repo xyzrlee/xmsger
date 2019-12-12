@@ -24,9 +24,8 @@ import app.illl.xmsger.struct.AirPollutant;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
@@ -34,15 +33,11 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.time.temporal.ChronoField;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 
-@ToString
-@Getter
-@Setter
+@Data
+@Slf4j
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CGShanghaiAir implements Serializable {
@@ -53,31 +48,23 @@ public class CGShanghaiAir implements Serializable {
     }
 
     public static final DateTimeFormatter FORMATTER =
-            new DateTimeFormatterBuilder()
-                    .appendValue(ChronoField.MONTH_OF_YEAR, 2)
-                    .appendLiteral('-')
-                    .appendValue(ChronoField.DAY_OF_MONTH, 2)
-                    .appendLiteral('-')
-                    .appendValue(ChronoField.YEAR)
-                    .appendLiteral(" ")
-                    .appendValue(ChronoField.HOUR_OF_DAY, 2)
-                    .appendLiteral(':')
-                    .appendValue(ChronoField.MINUTE_OF_HOUR, 2)
-                    .toFormatter(Locale.ENGLISH);
+            DateTimeFormatter.ofPattern("yyyy-MM-dd ha");
 
     private ZonedDateTime time;
     private String pollutantType;
     private BigDecimal concentration;
     private Integer aqi;
     private String definition;
+    private String city;
 
     public static CGShanghaiAir of(String text) {
-        String[] fields = StringUtils.split(text, ';');
+        String[] fields = StringUtils.splitByWholeSeparator(text, " - ");
         CGShanghaiAir cgShanghaiAir = new CGShanghaiAir();
-        cgShanghaiAir.setTime(ZonedDateTime.of(LocalDateTime.parse(fields[0], FORMATTER), ZoneIds.ASIA_SHANGHAI));
-        cgShanghaiAir.setPollutantType(fields[1].trim());
-        cgShanghaiAir.setConcentration(new BigDecimal(fields[2].trim()));
-        cgShanghaiAir.setAqi(Integer.valueOf(fields[3].trim()));
+        cgShanghaiAir.setCity(fields[0].trim());
+        cgShanghaiAir.setTime(ZonedDateTime.of(LocalDateTime.parse(fields[1].trim(), FORMATTER), ZoneIds.ASIA_SHANGHAI));
+        cgShanghaiAir.setPollutantType(fields[2].trim());
+        cgShanghaiAir.setConcentration(null);
+        cgShanghaiAir.setAqi(Integer.valueOf(StringUtils.split(fields[3].trim(), ' ')[0]));
         cgShanghaiAir.setDefinition(fields[4].trim());
         return cgShanghaiAir;
     }
