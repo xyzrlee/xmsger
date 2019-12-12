@@ -22,7 +22,6 @@ package app.illl.xmsger.service.twitter;
 import app.illl.xmsger.cache.TelegramRegisteredChatCache;
 import app.illl.xmsger.constant.TweetProcessorId;
 import app.illl.xmsger.constant.ZoneIds;
-import app.illl.xmsger.constant.ZoneNames;
 import app.illl.xmsger.datasource.entity.AirData;
 import app.illl.xmsger.datasource.service.AirDataService;
 import app.illl.xmsger.service.telegram.SendMessageService;
@@ -56,7 +55,7 @@ public class ShanghaiAirProcessorImpl implements ShanghaiAirProcessor {
     @Async
     private void saveAirData(CGShanghaiAir cgShanghaiAir) {
         airDataService.saveAirDataAsync(
-                ZoneNames.ASIA_SHANGHAI,
+                cgShanghaiAir.getCity(),
                 cgShanghaiAir.getTime(),
                 cgShanghaiAir.getAqi(),
                 cgShanghaiAir.getAirPollutants(),
@@ -99,7 +98,7 @@ public class ShanghaiAirProcessorImpl implements ShanghaiAirProcessor {
     }
 
     private Long getDurationHours(CGShanghaiAir cgShanghaiAir) {
-        Iterable<AirData> airDataIterable = airDataService.getLatestData(ZoneNames.ASIA_SHANGHAI, 26);
+        Iterable<AirData> airDataIterable = airDataService.getLatestData(cgShanghaiAir.getCity(), 26);
         ZonedDateTime startTime = cgShanghaiAir.getTime();
         int moderateCount = 0;
         for (AirData airData : airDataIterable) {
