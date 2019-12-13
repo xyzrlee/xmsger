@@ -42,7 +42,7 @@ public class ShanghaiAirProcessorImplTest {
     private MockMvc mvc;
 
     private static final String[] TWEETS = {
-            "{\"username\":\"CGShanghaiAir\",\"text\":\"Shanghai - 2019-12-12 1PM - PM2.5 - 86 AQI - Moderate\",\"link\":\"http://twitter.com/CGShanghaiAir/status/1205006034806300672\",\"created\":\"December 12, 2019 at 02:06PM\"}",
+            "{\"username\":\"CGShanghaiAir\",\"text\":\"Shanghai - 2019-12-12 1PM - PM2.5 - 186 AQI - Moderate\",\"link\":\"http://twitter.com/CGShanghaiAir/status/1205006034806300672\",\"created\":\"December 12, 2019 at 02:06PM\"}",
             "{\"username\":\"CGShanghaiAir\",\"text\":\"Shanghai - " + ZonedDateTime.now().minusHours(10).format(CGShanghaiAir.FORMATTER) + " - PM2.5 - 186 AQI - Moderate\",\"link\":\"http://twitter.com/CGShanghaiAir/status/1205006034806300672\",\"created\":\"December 12, 2019 at 02:06PM\"}",
             "{\"username\":\"CGShanghaiAir\",\"text\":\"Shanghai - " + ZonedDateTime.now().minusHours(9).format(CGShanghaiAir.FORMATTER) + " - PM2.5 - 186 AQI - Moderate\",\"link\":\"http://twitter.com/CGShanghaiAir/status/1205006034806300672\",\"created\":\"December 12, 2019 at 02:06PM\"}",
             "{\"username\":\"CGShanghaiAir\",\"text\":\"Shanghai - " + ZonedDateTime.now().minusHours(8).format(CGShanghaiAir.FORMATTER) + " - PM2.5 - 186 AQI - Moderate\",\"link\":\"http://twitter.com/CGShanghaiAir/status/1205006034806300672\",\"created\":\"December 12, 2019 at 02:06PM\"}",

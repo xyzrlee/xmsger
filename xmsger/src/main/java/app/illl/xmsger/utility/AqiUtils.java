@@ -12,6 +12,10 @@ public class AqiUtils {
         return aqi >= LEVEL_MODERATE;
     }
 
+    public static Boolean isHealthy(int aqi) {
+        return !isUnhealthy(aqi);
+    }
+
     public static Boolean isGood(int aqi) {
         return aqi <= LEVEL_GOOD;
     }

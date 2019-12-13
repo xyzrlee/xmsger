@@ -28,7 +28,6 @@ import app.illl.xmsger.service.telegram.SendMessageService;
 import app.illl.xmsger.struct.twitter.CGShanghaiAir;
 import app.illl.xmsger.struct.twitter.IftttTweet;
 import app.illl.xmsger.utility.AqiUtils;
-import app.illl.xmsger.utility.JsonUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -48,32 +47,32 @@ public class ShanghaiAirProcessorImpl implements ShanghaiAirProcessor {
     @Override
     public void process(IftttTweet iftttTweet) {
         CGShanghaiAir cgShanghaiAir = CGShanghaiAir.of(iftttTweet.getText());
-        this.saveAirData(cgShanghaiAir);
-        this.sendWarnMessage(cgShanghaiAir);
+        this.saveAirData(cgShanghaiAir, iftttTweet);
+        this.sendWarnMessage(cgShanghaiAir, iftttTweet);
     }
 
     @Async
-    private void saveAirData(CGShanghaiAir cgShanghaiAir) {
+    private void saveAirData(CGShanghaiAir cgShanghaiAir, IftttTweet iftttTweet) {
         airDataService.saveAirDataAsync(
                 cgShanghaiAir.getCity(),
                 cgShanghaiAir.getTime(),
                 cgShanghaiAir.getAqi(),
                 cgShanghaiAir.getAirPollutants(),
-                JsonUtils.toJson(cgShanghaiAir)
+                iftttTweet.getLink()
         );
     }
 
     @Async
-    private void sendWarnMessage(CGShanghaiAir cgShanghaiAir) {
+    private void sendWarnMessage(CGShanghaiAir cgShanghaiAir, IftttTweet iftttTweet) {
         log.trace("sendMessageService:{}", sendMessageService);
-        if (!AqiUtils.isUnhealthy(cgShanghaiAir.getAqi())) {
+        if (AqiUtils.isHealthy(cgShanghaiAir.getAqi())) {
             return;
         }
         Boolean disableNotification = isDoNotDisturbTime();
-        String message = "shanghai air pollution notice"
+        String message = "poor air quality\n"
+                + cgShanghaiAir.getCity() + ' ' + cgShanghaiAir.getAqi() + '\n'
                 + this.getDurationMessage(cgShanghaiAir)
-                + "." + '\n'
-                + cgShanghaiAir.toDetailMessage();
+                + iftttTweet.getLink();
         log.debug("warnMessage:{}", message);
         log.debug("sending to {} ids", telegramRegisteredChatCache.getChatIds().size());
         for (Integer chatId : telegramRegisteredChatCache.getChatIds()) {
@@ -90,9 +89,9 @@ public class ShanghaiAirProcessorImpl implements ShanghaiAirProcessor {
         long hours = this.getDurationHours(cgShanghaiAir);
         if (hours > 0) {
             if (hours <= 24) {
-                return ", lasted for " + hours + " hours";
+                return "lasted for " + hours + " hours\n";
             }
-            return ", lasted for more than 24 hours";
+            return "lasted for more than 24 hours\n";
         }
         return "";
     }
@@ -109,11 +108,11 @@ public class ShanghaiAirProcessorImpl implements ShanghaiAirProcessor {
             ) {
                 break;
             }
-            if (!AqiUtils.isUnhealthy(airData.getAqi())) {
-                moderateCount += 1;
-            } else {
+            if (AqiUtils.isHealthy(airData.getAqi())) {
                 moderateCount = 0;
                 startTime = airData.getMessageTime();
+            } else {
+                moderateCount += 1;
             }
         }
         log.trace("startTime:{}, endTime:{}", startTime, cgShanghaiAir.getTime());
