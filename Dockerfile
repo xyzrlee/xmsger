@@ -29,7 +29,6 @@ ENV PATH=${PATH}:/usr/lib/jvm/java-11-openjdk/bin
 
 COPY entrypoint.sh /xmsger-boot/entrypoint.sh
 
-ENV RUNAS=root
 ENV JVMARGS=
 
 ENTRYPOINT /xmsger-boot/entrypoint.sh
