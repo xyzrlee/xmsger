@@ -16,17 +16,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package app.illl.xmsger.constant;
+package app.illl.xmsger.datasource.repository;
 
-public class Telegram {
-    private Telegram() {
-    }
+import app.illl.xmsger.datasource.entity.TelegramSendToken;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-    public static final String BASE_URL = "https://api.telegram.org/bot";
-
-    public static final String METHOD_SEND_MESSAGE = "sendMessage";
-
-    public static final String PATH_WEBHOOK = "/telegram/webhook";
-    public static final String PATH_SENDIT = "/telegram/sendit/{token}";
-
+@Repository
+public interface TelegramSendTokenRepository extends CrudRepository<TelegramSendToken, String>, JpaSpecificationExecutor<TelegramSendToken> {
 }
