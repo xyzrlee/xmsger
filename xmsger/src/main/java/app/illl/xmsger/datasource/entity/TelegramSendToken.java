@@ -16,17 +16,33 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package app.illl.xmsger.constant;
+package app.illl.xmsger.datasource.entity;
 
-public class Telegram {
-    private Telegram() {
-    }
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-    public static final String BASE_URL = "https://api.telegram.org/bot";
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.io.Serializable;
 
-    public static final String METHOD_SEND_MESSAGE = "sendMessage";
+@Entity
+@Table(name = "telegram_send_token")
+@ToString
+@Setter
+@Getter
+@EqualsAndHashCode
+public class TelegramSendToken implements Serializable {
 
-    public static final String PATH_WEBHOOK = "/telegram/webhook";
-    public static final String PATH_SENDIT = "/telegram/sendit/{token}";
+    private static final long serialVersionUID = -6487798748029938943L;
+
+    @Id
+    private String token;
+
+    @Column(name = "chat_id")
+    private Integer chatId;
 
 }
