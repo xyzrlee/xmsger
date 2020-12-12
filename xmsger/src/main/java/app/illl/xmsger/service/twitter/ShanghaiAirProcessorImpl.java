@@ -51,7 +51,7 @@ public class ShanghaiAirProcessorImpl implements ShanghaiAirProcessor {
     }
 
     @Async
-    private void saveAirData(CGShanghaiAir cgShanghaiAir, IftttTweet iftttTweet) {
+    void saveAirData(CGShanghaiAir cgShanghaiAir, IftttTweet iftttTweet) {
         airDataService.saveAirDataAsync(
                 cgShanghaiAir.getCity(),
                 cgShanghaiAir.getTime(),
@@ -62,7 +62,7 @@ public class ShanghaiAirProcessorImpl implements ShanghaiAirProcessor {
     }
 
     @Async
-    private void sendWarnMessage(CGShanghaiAir cgShanghaiAir, IftttTweet iftttTweet) {
+    void sendWarnMessage(CGShanghaiAir cgShanghaiAir, IftttTweet iftttTweet) {
         log.trace("sendMessageService:{}", sendMessageService);
         if (AqiUtils.isHealthy(cgShanghaiAir.getAqi())) {
             return;
@@ -88,9 +88,9 @@ public class ShanghaiAirProcessorImpl implements ShanghaiAirProcessor {
         long hours = this.getDurationHours(cgShanghaiAir);
         if (hours > 0) {
             if (hours <= 24) {
-                return "lasted for " + hours + " hours\n";
+                return "lasted " + hours + " hours\n";
             }
-            return "lasted for more than 24 hours\n";
+            return "lasted more than 24 hours\n";
         }
         return "";
     }
