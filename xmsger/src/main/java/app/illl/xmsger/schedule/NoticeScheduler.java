@@ -34,6 +34,7 @@ class NoticeScheduler {
 
     private static final int MORNING_NOTICE_DAYS = 3;
     private static final int ARFTERNOON_NOTICE_DAYS = 1;
+    private static final int NIGHT_NOTICE_DAYS = 1;
 
     private final TelegramRegisteredChatService telegramRegisteredChatService;
     private final NoticeService noticeService;
@@ -60,5 +61,15 @@ class NoticeScheduler {
         return messageSent;
     }
 
+    @Scheduled(cron = "0 0 20 * * *")
+    int nightNotice() {
+        int messageSent = 0;
+        List<Integer> chatIds = telegramRegisteredChatService.getAllChatId();
+        if (null == chatIds) return messageSent;
+        for (Integer chatId : chatIds) {
+            messageSent += noticeService.monthlyNotice(chatId, NIGHT_NOTICE_DAYS);
+        }
+        return messageSent;
+    }
 
 }
