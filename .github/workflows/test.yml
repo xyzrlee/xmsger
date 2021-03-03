@@ -21,7 +21,6 @@ jobs:
           key: cache-m2-${{ hashFiles('xmsger/pom.xml') }}
       - name: build
         run: |
-          rm -f ${HOME}/.m2/settings.xml
           cd xmsger
           chmod +x mvnw
           ./mvnw clean package -Dmaven.javadoc.skip=true --batch-mode --show-version
