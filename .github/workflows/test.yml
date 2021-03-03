@@ -23,4 +23,4 @@ jobs:
         run: |
           cd xmsger
           chmod +x mvnw
-          ./mvnw clean package -Dmaven.javadoc.skip=true --batch-mode --show-version -X
+          ./mvnw clean package -Dmaven.javadoc.skip=true --batch-mode --show-version
