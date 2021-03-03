@@ -1,0 +1,26 @@
+name: test
+on:
+  push:
+    branches: [ "*" ]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+      - name: cache-m2
+        uses: actions/cache@v2
+        with:
+          path: "~/.m2"
+          key: cache-m2-${{ hashFiles('xmsger/pom.xml') }}
+      - name: build
+        run: |
+          cd xmsger
+          chmod +x mvnw
+          ./mvnw clean package -Dmaven.javadoc.skip=true --batch-mode --show-version
