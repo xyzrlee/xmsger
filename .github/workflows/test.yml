@@ -11,6 +11,9 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: true
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '11'
       - name: cache-m2
         uses: actions/cache@v2
         with:
