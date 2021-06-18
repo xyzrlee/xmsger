@@ -24,3 +24,11 @@ jobs:
           cd xmsger
           chmod +x mvnw
           ./mvnw clean package -Dmaven.javadoc.skip=true --batch-mode --show-version
+      - uses: LouisBrunner/checks-action@v1.1.1
+        if: always()
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: test
+          conclusion: ${{ job.status }}
+          output: |
+            {"summary":${{ steps.test.outputs.summary }}}
