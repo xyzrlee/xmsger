@@ -7,6 +7,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: ouzi-dev/commit-status-updater@v1.1.0
       - name: checkout
         uses: actions/checkout@v2
         with:
@@ -24,3 +25,7 @@ jobs:
           cd xmsger
           chmod +x mvnw
           ./mvnw clean package -Dmaven.javadoc.skip=true --batch-mode --show-version
+      - uses: ouzi-dev/commit-status-updater@v1.1.0
+        if: always()
+        with:
+          status: "${{ job.status }}"
