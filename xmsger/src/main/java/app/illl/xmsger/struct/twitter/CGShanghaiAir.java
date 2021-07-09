@@ -58,6 +58,9 @@ public class CGShanghaiAir implements Serializable {
 
     public static CGShanghaiAir of(String text) {
         String[] fields = StringUtils.splitByWholeSeparator(text, " - ");
+        if (fields.length < 5) {
+            return null;
+        }
         CGShanghaiAir cgShanghaiAir = new CGShanghaiAir();
         cgShanghaiAir.setCity(fields[0].trim());
         cgShanghaiAir.setTime(ZonedDateTime.of(LocalDateTime.parse(fields[1].trim(), FORMATTER), ZoneIds.ASIA_SHANGHAI));
