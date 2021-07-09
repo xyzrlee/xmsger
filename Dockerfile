@@ -18,8 +18,6 @@ RUN set -ex \
  && ./mvnw clean package ${MVNWARGS}\
  && mkdir -p /xmsger-boot /xmsger \
  && cp target/xmsger.jar /xmsger-boot/ \
- && rm -rf /repo \
- && rm -rf ${HOME}/.m2 \
  && ls -l /xmsger-boot
 
 FROM alpine
