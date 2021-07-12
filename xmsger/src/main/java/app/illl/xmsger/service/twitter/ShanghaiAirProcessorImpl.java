@@ -46,6 +46,9 @@ public class ShanghaiAirProcessorImpl implements ShanghaiAirProcessor {
     @Override
     public void process(IftttTweet iftttTweet) {
         CGShanghaiAir cgShanghaiAir = CGShanghaiAir.of(iftttTweet.getText());
+        if (null == cgShanghaiAir) {
+            return;
+        }
         this.saveAirData(cgShanghaiAir, iftttTweet);
         this.sendWarnMessage(cgShanghaiAir, iftttTweet);
     }
